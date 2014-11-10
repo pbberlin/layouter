@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{define "tplBase"}}<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -123,23 +123,30 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 
 {{range $idxCorridor, $lpCorridor := .Corridors }}
 
-	{{ $nBlocks := len .Blocks  }} 
-
-	<!-- 
-	Corridor #{{$idxCorridor}}<br>
-	Blocks:   {{$nBlocks}}<br>
-	-->
+	{{$colCorridor := fColorizer 0 $idxCorridor }}
 
 	<span class='bl1-no-block-spaces' >
-	<div class='blc bl1 w{{$lpCorridor.Cols}}' 
+	<div
+		name='corridor' 
+		class='blc bl1 w{{$lpCorridor.Cols}}' 
 		style='
 		aafloat:left;
 		padding-bottom:10px;
+		background-color:#{{$colCorridor}}; 
 		' 
+
 	>
+		<!-- 
+		Corridor #{{$idxCorridor}}<br>
+		{{ $nBlocks := len .Blocks  }} 
+		Blocks:   {{$nBlocks}}<br>
+		-->
 		
 		<!-- a corridor-->
-		{{range $idxCorridor, $lpCorridor := .Blocks }}
+		{{range $idxBlock, $lpBlock := .Blocks }}
+
+			{{$colBlock := fColorizer 1 $idxBlock }}
+
 			
 			<!-- a block-->
 			<!-- {if not $iCol1} -->
@@ -171,6 +178,7 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 					position:relative;
 					vertical-align:top;
 					aabackground-color:#aaa;
+					background-color:#{{$colBlock}}; 
 				' 
 			>
 				
@@ -181,13 +189,6 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 					{{.Body}}<br>
 				{{end}}
 			</div> 
-
-
-
-
-
-
-
 
 
 
@@ -204,3 +205,4 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 	<p><a href='/'>Back to root</a></p>
 </body>
 </html>
+{{end}}

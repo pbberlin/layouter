@@ -2,26 +2,26 @@ package main
 
 import (
 	"fmt"
-	"html/template"
+	tt "html/template"
 	"net/http"
 )
 
 func layoutHandler(w http.ResponseWriter, r *http.Request) {
 
-	p := map[string]string{
-		"Title": "my Title",
-		"Body":  "my Body",
+	funcMap := tt.FuncMap{
+		"fColorizer": Colorizer2,
 	}
-	_ = p
 
-	t, err := template.ParseFiles("templ/main.html")
+	var err error
+	tBase := tt.New("tplBase").Funcs(funcMap)
+	tBase, err = tBase.ParseFiles("templ/main.html")
 	if err != nil {
 		fmt.Fprintf(w, "%v <br>\n", err)
 		return
 	}
 
 	{
-		err := t.Execute(w, vp)
+		err := tBase.Execute(w, vp)
 		if err != nil {
 			fmt.Fprintf(w, "%v <br>\n", err)
 			return
