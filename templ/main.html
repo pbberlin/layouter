@@ -9,70 +9,9 @@
 <link rel="stylesheet" href="/static/basic.css" media="screen" type="text/css" />
 <body>
 	<style>   
-		@media (min-width: 600px) {
-			.wn  { width: 106px; } .w1{ width: 116px; } .w2{ width: 232px; } .w3{ width: 348px; } .w4{ width: 464px; } .w5{ width: 580px; } 
-		}
-		@media (min-width: 650px) {
-			.wn  { width: 116px; } .w1{ width: 126px; } .w2{ width: 252px; } .w3{ width: 378px; } .w4{ width: 504px; } .w5{ width: 630px; } 
-		}
-		@media (min-width: 700px) {
-			.wn  { width: 126px; } .w1{ width: 136px; } .w2{ width: 272px; } .w3{ width: 408px; } .w4{ width: 544px; } .w5{ width: 680px; } 
-		}
-		@media (min-width: 750px) {
-			.wn  { width: 136px; } .w1{ width: 146px; } .w2{ width: 292px; } .w3{ width: 438px; } .w4{ width: 584px; } .w5{ width: 730px; } 
-		}
-		@media (min-width: 800px) {
-			.wn  { width: 146px; } .w1{ width: 156px; } .w2{ width: 312px; } .w3{ width: 468px; } .w4{ width: 624px; } .w5{ width: 780px; } 
-		}
-		@media (min-width: 850px) {
-			.wn  { width: 156px; } .w1{ width: 166px; } .w2{ width: 332px; } .w3{ width: 498px; } .w4{ width: 664px; } .w5{ width: 830px; } 
-		}
-		@media (min-width: 900px) {
-			.wn  { width: 166px; } .w1{ width: 176px; } .w2{ width: 352px; } .w3{ width: 528px; } .w4{ width: 704px; } .w5{ width: 880px; } 
-		}
-		@media (min-width: 950px) {
-			.wn  { width: 176px; } .w1{ width: 186px; } .w2{ width: 372px; } .w3{ width: 558px; } .w4{ width: 744px; } .w5{ width: 930px; } 
-		}
-		@media (min-width: 1000px) {
-			.wn  { width: 186px; } .w1{ width: 196px; } .w2{ width: 392px; } .w3{ width: 588px; } .w4{ width: 784px; } .w5{ width: 980px; } 
-		}
-		@media (min-width: 1050px) {
-			.wn  { width: 196px; } .w1{ width: 206px; } .w2{ width: 412px; } .w3{ width: 618px; } .w4{ width: 824px; } .w5{ width: 1030px; } 
-		}
-		@media (min-width: 1100px) {
-			.wn  { width: 206px; } .w1{ width: 216px; } .w2{ width: 432px; } .w3{ width: 648px; } .w4{ width: 864px; } .w5{ width: 1080px; } 
-		}
-		@media (min-width: 1150px) {
-			.wn  { width: 216px; } .w1{ width: 226px; } .w2{ width: 452px; } .w3{ width: 678px; } .w4{ width: 904px; } .w5{ width: 1130px; } 
-		}
-		@media (min-width: 1200px) {
-			.wn  { width: 226px; } .w1{ width: 236px; } .w2{ width: 472px; } .w3{ width: 708px; } .w4{ width: 944px; } .w5{ width: 1180px; } 
-		}
-		@media (min-width: 1250px) {
-			.wn  { width: 236px; } .w1{ width: 246px; } .w2{ width: 492px; } .w3{ width: 738px; } .w4{ width: 984px; } .w5{ width: 1230px; } 
-		}
-		@media (min-width: 1300px) {
-			.wn  { width: 246px; } .w1{ width: 256px; } .w2{ width: 512px; } .w3{ width: 768px; } .w4{ width: 1024px; } .w5{ width: 1280px; } 
-		}
-		@media (min-width: 1350px) {
-			.wn  { width: 256px; } .w1{ width: 266px; } .w2{ width: 532px; } .w3{ width: 798px; } .w4{ width: 1064px; } .w5{ width: 1330px; } 
-		}
-		@media (min-width: 1400px) {
-			.wn  { width: 266px; } .w1{ width: 276px; } .w2{ width: 552px; } .w3{ width: 828px; } .w4{ width: 1104px; } .w5{ width: 1380px; } 
-		}
-		@media (min-width: 1450px) {
-			.wn  { width: 276px; } .w1{ width: 286px; } .w2{ width: 572px; } .w3{ width: 858px; } .w4{ width: 1144px; } .w5{ width: 1430px; } 
-		}
-		@media (min-width: 1500px) {
-			.wn  { width: 286px; } .w1{ width: 296px; } .w2{ width: 592px; } .w3{ width: 888px; } .w4{ width: 1184px; } .w5{ width: 1480px; } 
-		}
-		@media (min-width: 1550px) {
-			.wn  { width: 296px; } .w1{ width: 306px; } .w2{ width: 612px; } .w3{ width: 918px; } .w4{ width: 1224px; } .w5{ width: 1530px; } 
-		}
-		@media (min-width: 1600px) {
-			.wn  { width: 306px; } .w1{ width: 316px; } .w2{ width: 632px; } .w3{ width: 948px; } .w4{ width: 1264px; } .w5{ width: 1580px; } 
-		}	
+		{{ .CSS | fCSS }}
 	</style>
+
 	<style>
 
 
@@ -82,13 +21,13 @@
 		}
 
 
-
 		.bl1-no-block-spaces {
 			font-size:0px;
 		}
 
+
 		.bl1 {
-			font-size: 8px;		
+			font-size: 12px;		
 			vertical-align:top; 
 			aaborder: 1px solid #99c;
 			margin: 0px;
@@ -115,7 +54,8 @@
 	</style>
 
 
-Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
+Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
+{{ len .Corridors}} Corridors<br>
 
 {{ $Corridors  := .Corridors }} 
 {{ $mapOrArray := .Corridors }} 
@@ -130,17 +70,36 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 		name='corridor' 
 		class='blc bl1 w{{$lpCorridor.Cols}}' 
 		style='
-		aafloat:left;
-		padding-bottom:10px;
-		background-color:#{{$colCorridor}}; 
+			aafloat:left;
+			position:relative;
+			padding-bottom:10px;
+			background-color:#{{$colCorridor}}; 
 		' 
 
 	>
-		<!-- 
-		Corridor #{{$idxCorridor}}<br>
-		{{ $nBlocks := len .Blocks  }} 
-		Blocks:   {{$nBlocks}}<br>
-		-->
+
+		<div  name='debug_label_corridor' 
+				style='
+				display:inline-block;
+				background-color:#{{$colCorridor}};
+				position:absolute;
+				right:-8px;
+				top: -8px;
+				z-index: 100;
+				border: 1px solid #000;
+				font-size:11px;
+				font-weight:normal;
+				padding: 1px 4px;
+				'
+		>
+			{{if  .Direction }}
+				Horiz - {{.Cols}} Cols
+			{{else}}
+				Vertic - {{.Rows}} Rows
+			{{end}}
+
+		</div> 
+
 		
 		<!-- a corridor-->
 		{{range $idxBlock, $lpBlock := .Blocks }}
@@ -163,9 +122,6 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 				>
 					{{ .Headline  }}   
 					
-					<span style='font-size:11px;font-weight:normal;'>
-						&nbsp; c{{.Cols}}-r{{.Rows}} {{ len .Els}} 
-					</span> 
 				</span> 
 			{{end}}
 
@@ -181,6 +137,21 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 					background-color:#{{$colBlock}}; 
 				' 
 			>
+
+				<div  name='debug_label_block' 
+						style='
+						display:inline-block;
+						background-color:#fff;
+						position:absolute;
+						right:0px;
+						border: 1px solid #000;
+						font-size:11px;
+						font-weight:normal;
+						padding: 1px 4px;
+						'
+				>
+					{{.Rows}} {{.Cols}} Els {{ len .Els}} 
+				</div> 
 				
 				{{range $idxElement, $lpElement := .Els }}
 					{{if  .Headline }}
@@ -203,6 +174,7 @@ Rows-Cols: {{.Rows}} {{.Cols}} Corridors: {{ len .Corridors}}<br>
 
 
 	<p><a href='/'>Back to root</a></p>
+
 </body>
 </html>
 {{end}}

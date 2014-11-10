@@ -82,5 +82,6 @@ type Corridor struct {
 // Viewport contains the corridors
 type Viewport struct {
 	Dims
+	CSS       string // dynamically generated CSS stuff
 	Corridors []Corridor
 }

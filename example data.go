@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/drhodes/golorem"
+	"github.com/pbberlin/tools/util"
 	"math/rand"
 	"time"
 )
@@ -18,6 +19,7 @@ func generateRandomData() {
 	//fmt.Printf("%s \n", spew.Sdump(vp))
 	vp = Viewport{}
 	vp.Cols = rand.Intn(5) + 2
+	vp.CSS = util.CSSColumnsWidth(vp.Cols)
 
 	nCorridors := rand.Intn(3) + 2
 	vp.Corridors = make([]Corridor, nCorridors)
@@ -42,7 +44,7 @@ func generateRandomData() {
 				if rand.Intn(3) < 1 {
 					i3l.Headline += lorem.Sentence(4, 10)
 				}
-				i3l.Body += spf("%v.%v.%v: ", i1, i2, i3)
+				i3l.Body += spf("%v.%v.%v: ", i1+1, i2+1, i3+1)
 				i3l.Body += lorem.Paragraph(2, 5)
 			}
 

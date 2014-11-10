@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/pbberlin/tools/colors"
 	tt "html/template"
 	"net/http"
 )
@@ -9,7 +10,15 @@ import (
 func layoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	funcMap := tt.FuncMap{
-		"fColorizer": Colorizer2,
+		"fColorizer": colors.Colorizer2,
+		"fAttr": func(s string) tt.HTMLAttr {
+			// to attribute  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
+			return tt.HTMLAttr(s)
+		},
+		"fCSS": func(s string) tt.CSS {
+			// to CSS  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
+			return tt.CSS(s)
+		},
 	}
 
 	var err error
@@ -26,8 +35,6 @@ func layoutHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "%v <br>\n", err)
 			return
 		}
-		//t.Execute(w, p)
-
 	}
 
 }
