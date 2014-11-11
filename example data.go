@@ -19,6 +19,7 @@ func generateRandomData() {
 	//fmt.Printf("%s \n", spew.Sdump(vp))
 	vp = Viewport{}
 	vp.Cols = rand.Intn(5) + 2
+	vp.Rows = rand.Intn(5) + 2
 	vp.CSS = util.CSSColumnsWidth(vp.Cols)
 
 	nCorridors := rand.Intn(3) + 2
@@ -27,7 +28,8 @@ func generateRandomData() {
 	for i1 := 0; i1 < len(vp.Corridors); i1++ {
 		i1l := &vp.Corridors[i1] // the only way ...
 		*i1l = Corridor{}        // ... to change the value of the slice element
-		i1l.RandomizeDirectionAndRowsCols()
+		i1l.Parent = &vp
+		i1l.RandomizeDirectionAndRowsCols(i1 == len(vp.Corridors)-1)
 
 		i1l.Blocks = make([]Block, 2+rand.Intn(4))
 		for i2 := 0; i2 < len(i1l.Blocks); i2++ {
@@ -58,12 +60,15 @@ func generateRandomData() {
 
 func dumpAll(vp Viewport, level int) string {
 
+	// remove some stuff to reduce redundant verbosity
 	if level == 1 {
-		// remove the block to corridor pointers
 		for i1 := 0; i1 < len(vp.Corridors); i1++ {
 			i1l := &vp.Corridors[i1]
+			// remove the corridor to viewport pointers
+			i1l.Parent = nil
 			for i2 := 0; i2 < len(i1l.Blocks); i2++ {
 				i2l := &i1l.Blocks[i2]
+				// remove the block to corridor pointers
 				i2l.Parent = nil
 			}
 		}

@@ -92,10 +92,11 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 				padding: 1px 4px;
 				'
 		>
+			Cor#{{fAdd $idxCorridor 1}}
 			{{if  .Direction }}
-				Horiz - {{.Cols}} Cols
+				Horiz - {{.Cols}} Cols - {{ len .Blocks}} Blocks
 			{{else}}
-				Vertic - {{.Rows}} Rows
+				Vertic - {{.Rows}} Rows  - {{ len .Blocks}} Blocks
 			{{end}}
 
 		</div> 
@@ -108,7 +109,6 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 			
 			<!-- a block-->
-			<!-- {if not $iCol1} -->
 			{{if  .Headline }}
 				<!-- block has heading -->
 				<span class='blc bl2' style='
@@ -127,43 +127,84 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 
 
-			<div class='wn' 
-				name='force-columnar-align'
-				style='
-					display:inline-block;
-					position:relative;
-					vertical-align:top;
-					aabackground-color:#aaa;
-					background-color:#{{$colBlock}}; 
-				' 
-			>
+			<!-- Now comes the horror.
+				We have to distribute the elements into the block-cols.
+				Thus we iterate over the block-cols.
+				Secondly, we iterate over the block rows.
+				We compute the Element index 
+				   Rows * ColNumber + RowNumber 
+				Then we access the Element by that idxElements.
+			-->
 
-				<div  name='debug_label_block' 
-						style='
+
+			<!-- a block COLUMN -->
+			{{$sNumCols := fMakeRange  .Cols  }}
+			{{range  $idxCol, $idxCol2 :=  $sNumCols }}
+
+
+				<div class='wn' 
+					name='force-columnar-align'
+					style='
 						display:inline-block;
-						background-color:#fff;
-						position:absolute;
-						right:0px;
-						border: 1px solid #000;
-						font-size:11px;
-						font-weight:normal;
-						padding: 1px 4px;
-						'
+						position:relative;
+						vertical-align:top;
+						aabackground-color:#aaa;
+						background-color:#{{$colBlock}}; 
+					' 
 				>
-					{{.Rows}} {{.Cols}} Els {{ len .Els}} 
-				</div> 
-				
-				{{range $idxElement, $lpElement := .Els }}
-					{{if  .Headline }}
-						<b>{{.Headline}}</b><br>
+
+					<div  name='debug_label_block_column' 
+							style='
+							display:inline-block;
+							background-color:#fff;
+							position:absolute;
+							right:2px;
+							top:8px;
+							border: 1px solid #000;
+							font-size:11px;
+							font-weight:normal;
+							padding: 1px 4px;
+							'
+					>
+						{{$nElements := len $lpBlock.Els}}
+						{{if not $idxCol}}  <!-- show block info only with the first block column -->
+							B#{{fAdd $idxBlock 1}}  Col#{{fAdd $idxCol 1}} - 
+							  {{$lpBlock.Rows}}R{{$lpBlock.Cols}}C{{$nElements}}Els
+						{{end}}
+					</div> 
+					
+
+
+					{{ $sRows := fMakeRange  $lpBlock.Rows  }} 
+					{{range  $idxRow, $idxRow2 :=  $sRows }}
+						{{ $idxElem :=  fMult $idxCol $lpBlock.Rows | fAdd $idxRow }}
+						{{ $inRange :=  lt  $idxElem $nElements }}
+						{{if $inRange}}
+							{{$Elem :=  index $lpBlock.Els $idxElem}} 
+							{{if  $Elem.Headline }}
+								<b>{{$Elem.Headline}}</b><br>
+							{{end}}
+							{{$Elem.Body}}<br>
+						{{end}}
+						<br>
 					{{end}}
-					{{.Body}}<br>
-				{{end}}
-			</div> 
+
+	
+
+					<!--
+					{{range $idxElement, $lpElement := $lpBlock.Els }}
+						{{if  .Headline }}
+							<b>{{.Headline}}</b><br>
+						{{end}}
+						{{.Body}}<br>
+					{{end}}
+					-->
+				</div> <!-- /force-columnar-align-->
 
 
+			{{end}}	 <!-- end of block column -->
 
-		{{end}}	
+		{{end}}	 <!-- end of block -->
 	</div>
 	</span class='bl1-no-block-spaces' >
 

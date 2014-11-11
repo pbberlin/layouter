@@ -53,10 +53,10 @@ const (
 type Dims struct {
 	Direction ExpandingTo // constant Horizontal or Vertical
 	// expanding direction - can inherit from surrounding corridor
-	Cols int
-	Rows int
-	// Horizontal bool
-	// Vertical   bool
+	Cols         int
+	Rows         int
+	ColsConsumed int // dyn. counter for the lower levels
+	Rowsconsumed int
 }
 
 // Block is a rectangle, bracketing a number of elements
@@ -65,18 +65,19 @@ type Block struct {
 	Parent   *Corridor
 	Headline string // a block may have its own Headline
 	Subline  string // and Abstract
-	Els      []El   // a slice of elements, the pointer enabled access while ranging - http://stackoverflow.com/questions/15945030/change-values-while-iterating-in-golang
+	Els      []El   // a slice of elements
 	BySize   SSizeInfo
 	Fixed    Dims // a shadow - with values set by the editor - not the computed ones
 }
 
-// Corridor is a stream of Rectangles
+// Corridor is a stream of Blocks, that is Rectangles.
 // It expands horizontal, with constant rows.
 // Or grows vertical, constant cols.
 type Corridor struct {
 	Dims
 	Blocks []Block
 	Fixed  Dims // a shadow - with values set by the editor - not the computed ones
+	Parent *Viewport
 }
 
 // Viewport contains the corridors
