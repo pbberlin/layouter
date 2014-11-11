@@ -39,7 +39,10 @@ func (b *Block) RebalanceElements() []string {
 
 		// Now split the body into smaller elements, that can more easily be balanced
 		sentencesRaw := strings.SplitAfter(v.Body, ".") // this could be fine tuned with ? and ! and comma/semiccolon - and exclusion of inc. and et. al.
+
 		sentencsRefined := RefineTokenizedSlice(sentencesRaw, 15)
+		sentencsRefined := SplitFurther(sentencesRaw, ",")
+
 		numRefinedSentences := len(sentencsRefined)
 		all = append(all, make([]mixed, numRefinedSentences)...)
 		for j := 0; j < numRefinedSentences; j++ {
@@ -83,6 +86,14 @@ func RefineTokenizedSlice(sentencesRaw []string, atLeast int) []string {
 
 	// constrain newly refined slice to non empty elements
 	sentencsRefined = sentencsRefined[:idx2]
+
+	return sentencsRefined
+
+}
+
+func SplitFurther(sentencesRaw []string, sep string) []string {
+
+	sentencsRefined := make([]string, len(sentencesRaw))
 
 	return sentencsRefined
 
