@@ -2,11 +2,18 @@ package main
 
 import (
 	"fmt"
+	"github.com/pbberlin/tools/util"
 	"net/http"
 )
 
 func regenerateRandom(w http.ResponseWriter, req *http.Request) {
-	generateRandomData()
+
+	var nColsViewport = 6
+	if req.FormValue("nColsViewport") != "" {
+		nColsViewport = util.Stoi(req.FormValue("nColsViewport"))
+	}
+
+	generateRandomData(nColsViewport)
 }
 
 func rawHandler(w http.ResponseWriter, req *http.Request) {

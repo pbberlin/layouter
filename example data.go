@@ -13,16 +13,22 @@ var e2 = El{"Headline 02", "http://www.microsoft.com", "Body 02 Body 02 Body 02"
 
 var vp = Viewport{}
 
-func generateRandomData() {
+func generateRandomData(nColsViewPort int) {
 	rand.Seed(time.Now().UnixNano())
 
 	//fmt.Printf("%s \n", spew.Sdump(vp))
 	vp = Viewport{}
-	vp.Cols = rand.Intn(5) + 2
+	if nColsViewPort < 1 {
+		vp.Cols = rand.Intn(5) + 2
+
+	} else {
+		vp.Cols = nColsViewPort
+	}
 	vp.Rows = rand.Intn(5) + 2
 	vp.CSS = util.CSSColumnsWidth(vp.Cols)
 
 	nCorridors := rand.Intn(3) + 2
+	nCorridors = 3
 	vp.Corridors = make([]Corridor, nCorridors)
 
 	for i1 := 0; i1 < len(vp.Corridors); i1++ {
@@ -52,6 +58,7 @@ func generateRandomData() {
 
 			i2l.GenerateSizeSorting()
 			i2l.ComputeRowsAndCols()
+			i2l.RebalanceElements()
 
 		}
 
@@ -77,5 +84,5 @@ func dumpAll(vp Viewport, level int) string {
 }
 
 func init() {
-	generateRandomData()
+	generateRandomData(0)
 }

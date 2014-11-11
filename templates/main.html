@@ -134,6 +134,9 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 				We compute the Element index 
 				   Rows * ColNumber + RowNumber 
 				Then we access the Element by that idxElements.
+
+				All this logic needs to be moved to server.
+				There should be a balanced distribution of elements over columns.
 			-->
 
 
@@ -168,8 +171,11 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 					>
 						{{$nElements := len $lpBlock.Els}}
 						{{if not $idxCol}}  <!-- show block info only with the first block column -->
-							B#{{fAdd $idxBlock 1}}  Col#{{fAdd $idxCol 1}} - 
+							B#{{fAdd $idxBlock 1}}  - 
 							  {{$lpBlock.Rows}}R{{$lpBlock.Cols}}C{{$nElements}}Els
+							  Col#{{fAdd $idxCol 1}} 
+						{{else}}
+							Col#{{fAdd $idxCol 1}}
 						{{end}}
 					</div> 
 					
