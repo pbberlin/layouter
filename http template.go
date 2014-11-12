@@ -10,7 +10,7 @@ import (
 func layoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	funcMap := tt.FuncMap{
-		"fColorizer": colors.Colorizer2,
+		"fColorizer": colors.AlternatingColorShades,
 		"fMakeRange": func(num int) []int {
 			sl := make([]int, num)
 			for i, _ := range sl {
@@ -31,6 +31,10 @@ func layoutHandler(w http.ResponseWriter, r *http.Request) {
 		"fCSS": func(s string) tt.CSS {
 			// to CSS  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
 			return tt.CSS(s)
+		},
+		"fHTML": func(s string) tt.HTML {
+			// to CSS  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
+			return tt.HTML(s)
 		},
 	}
 

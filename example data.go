@@ -52,8 +52,19 @@ func generateRandomData(nColsViewPort int) {
 				if rand.Intn(3) < 1 {
 					i3l.Headline += lorem.Sentence(4, 10)
 				}
-				i3l.Body += spf("%v.%v.%v: ", i1+1, i2+1, i3+1)
-				i3l.Body += lorem.Paragraph(2, 5)
+				prefix := spf("%v.%v.%v: ", i1+1, i2+1, i3+1)
+
+				for i := 0; i < 1+rand.Intn(3); i++ {
+					p := lorem.Paragraph(2, 5)
+					if i == 0 {
+						i3l.Body += spf("<p>%s %s</p>", prefix, p)
+
+					} else {
+						i3l.Body += spf("<p>%s</p>", p)
+
+					}
+				}
+
 			}
 
 			i2l.GenerateSizeSorting()

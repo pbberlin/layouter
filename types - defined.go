@@ -62,12 +62,14 @@ type Dims struct {
 // Block is a rectangle, bracketing a number of elements
 type Block struct {
 	Dims
-	Parent   *Corridor
-	Headline string // a block may have its own Headline
-	Subline  string // and Abstract
-	Els      []El   // a slice of elements
-	BySize   SSizeInfo
-	Fixed    Dims // a shadow - with values set by the editor - not the computed ones
+	Parent         *Corridor
+	Headline       string // a block may have its own Headline
+	Subline        string // and Abstract
+	Els            []El   // a slice of elements
+	BySize         SSizeInfo
+	Fixed          Dims       // a shadow - with values set by the editor - not the computed ones
+	ElsPerCol      [][]string // #Column - filled by RebalanceElements()
+	ElsPerColSizes []int
 }
 
 // Corridor is a stream of Blocks, that is Rectangles.

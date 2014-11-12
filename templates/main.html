@@ -15,40 +15,85 @@
 	<style>
 
 
+		/* basic inlince block style */
 		.blc {
 			display:inline-block;
 			vertical-align:top;
+			position:relative;
+			margin: 0px;
 		}
 
 
-		.bl1-no-block-spaces {
+		.bl-no-block-spaces {
 			font-size:0px;
 		}
 
-
-		.bl1 {
-			font-size: 12px;		
-			vertical-align:top; 
-			aaborder: 1px solid #99c;
-			margin: 0px;
-			margin-top: 2px
-			margin-bottom:8px;
-			background-color: #eef;
-			aamargin-left: 4px;
-
-		}
-
-
-		.bl2 {
-			font-size:14px;
+		/* level1 - block - fonts and margins */
+		.bl-h1 {
+			font-size:16px;
+			font-weight:bold;
 
 			margin-top:    1px;
 			margin-bottom: 4px;
+			margin-left :  2px;
+			margin-right:  5px;
 
-			margin-left : 2px;
-			margin-right: 5px;
-			padding-left: 8px;
-			aabackground-color: #eef;
+			padding-left: 2px;
+		}
+
+
+		/* default attributes fonts and margins */
+		.bl-a1 {
+			font-size: 12px;		
+
+			margin: 0px;
+			margin-top: 2px
+			margin-bottom:8px;
+
+			padding-bottom:10px;
+
+		}
+
+		/* This is the most delicate setting
+			it's the difference between wn and w1/w2...
+			when too small, vertical aligment fails
+			when too large, blocks break into new lines
+
+			Test for all viewport widths
+
+			It needs to change for the rightmost column.
+
+			It could be switched right-side/left-side depending on the col size
+		 */
+		.col-border-inner {
+			margin-left: 4px;			
+			padding-right: 4px;
+			border-right: 2px dotted #222;
+		}
+		.col-border-rightmost {
+			margin-left: 4px;	
+			padding-right: 6px;
+			border-right: none;  /* must override border-inner*/
+		}
+
+
+		h2 {
+			font-size: 13px;
+			line-height: 16px;
+			font-weight: bold;
+			padding: 0;
+			margin: 0;
+			margin-top: 6px;
+			margin-bottom: 2px;
+		}
+		p {
+			font-size: 12px;
+			line-height: 16px;
+			padding: 0;
+			margin: 0;
+			margin-bottom: 6px;
+
+			text-align: justify;
 		}
 
 	</style>
@@ -62,18 +107,18 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 
 {{range $idxCorridor, $lpCorridor := .Corridors }}
+	<!-- a corridor-->
 
 	{{$colCorridor := fColorizer 0 $idxCorridor }}
 
-	<span class='bl1-no-block-spaces' >
+	<span class='bl-no-block-spaces' >
 	<div
 		name='corridor' 
-		class='blc bl1 w{{$lpCorridor.Cols}}' 
+		class='blc w{{$lpCorridor.Cols}}' 
 		style='
 			aafloat:left;
-			position:relative;
-			padding-bottom:10px;
 			background-color:#{{$colCorridor}}; 
+			padding-bottom: 12px;
 		' 
 
 	>
@@ -102,22 +147,19 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 		</div> 
 
 		
-		<!-- a corridor-->
 		{{range $idxBlock, $lpBlock := .Blocks }}
-
-			{{$colBlock := fColorizer 1 $idxBlock }}
-
-			
 			<!-- a block-->
+
+			{{$colorBlock := fColorizer 1 $idxBlock }}
+
+
+
+			<!-- block headline -->
 			{{if  .Headline }}
-				<!-- block has heading -->
-				<span class='blc bl2' style='
-						font-weight:bold;
-						font-size:16px;
+				<span class='blc bl-h1' style='
 						width:95%;
 						margin-top:4px;
 						margin-bottom:0px;
-						padding-left: 0px;
 					' 
 				>
 					{{ .Headline  }}   
@@ -126,96 +168,74 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 			{{end}}
 
 
+			<div 
+				name='block-wrapper'
+				class='blc  w{{.Cols}}' 
+				style='
+					background-color:#{{$colorBlock}}; 
+					padding-bottom: 12px;
+				' 
+			>
 
-			<!-- Now comes the horror.
-				We have to distribute the elements into the block-cols.
-				Thus we iterate over the block-cols.
-				Secondly, we iterate over the block rows.
-				We compute the Element index 
-				   Rows * ColNumber + RowNumber 
-				Then we access the Element by that idxElements.
+				{{$idxLastCol := len .ElsPerCol}}
+				{{$idxLastCol := fAdd $idxLastCol -1}}
 
-				All this logic needs to be moved to server.
-				There should be a balanced distribution of elements over columns.
-			-->
-
-
-			<!-- a block COLUMN -->
-			{{$sNumCols := fMakeRange  .Cols  }}
-			{{range  $idxCol, $idxCol2 :=  $sNumCols }}
+				{{range  $idxCol, $colParagraphs :=  .ElsPerCol }}
+				<!-- a block COLUMN -->
 
 
-				<div class='wn' 
-					name='force-columnar-align'
-					style='
-						display:inline-block;
-						position:relative;
-						vertical-align:top;
-						aabackground-color:#aaa;
-						background-color:#{{$colBlock}}; 
-					' 
-				>
+					{{$colorBlockCol := fColorizer 2 $idxCol }}
 
-					<div  name='debug_label_block_column' 
-							style='
-							display:inline-block;
-							background-color:#fff;
-							position:absolute;
-							right:2px;
-							top:8px;
-							border: 1px solid #000;
-							font-size:11px;
-							font-weight:normal;
-							padding: 1px 4px;
-							'
+					<div 
+						name='force-columnar-align'
+						class='blc wn bl-a1  col-border-inner {{if eq $idxCol $idxLastCol }} col-border-rightmost {{end}}
+						' 
+						style='
+							aabackground-color:#{{$colorBlockCol}}; 
+						' 
 					>
-						{{$nElements := len $lpBlock.Els}}
-						{{if not $idxCol}}  <!-- show block info only with the first block column -->
-							B#{{fAdd $idxBlock 1}}  - 
-							  {{$lpBlock.Rows}}R{{$lpBlock.Cols}}C{{$nElements}}Els
-							  Col#{{fAdd $idxCol 1}} 
-						{{else}}
-							Col#{{fAdd $idxCol 1}}
-						{{end}}
-					</div> 
-					
 
-
-					{{ $sRows := fMakeRange  $lpBlock.Rows  }} 
-					{{range  $idxRow, $idxRow2 :=  $sRows }}
-						{{ $idxElem :=  fMult $idxCol $lpBlock.Rows | fAdd $idxRow }}
-						{{ $inRange :=  lt  $idxElem $nElements }}
-						{{if $inRange}}
-							{{$Elem :=  index $lpBlock.Els $idxElem}} 
-							{{if  $Elem.Headline }}
-								<b>{{$Elem.Headline}}</b><br>
+						<div  name='debug_label_block_column' 
+								style='
+								display:inline-block;
+								background-color:#fff;
+								position:absolute;
+								right:2px;
+								top:8px;
+								border: 1px solid #000;
+								font-size:11px;
+								font-weight:normal;
+								padding: 1px 4px;
+								'
+						>
+							{{$nElements := len $lpBlock.Els}}
+							{{if not $idxCol}}  <!-- show block info only with the first block column -->
+								B#{{fAdd $idxBlock 1}}  - 
+								  {{$lpBlock.Rows}}R{{$lpBlock.Cols}}C{{$nElements}}Els
+								  Col#{{fAdd $idxCol 1}} 
+							{{else}}
+								Col#{{fAdd $idxCol 1}}
 							{{end}}
-							{{$Elem.Body}}<br>
+						</div> 
+						
+
+
+						{{range  $idxParagraph, $paragraph :=  $colParagraphs }}
+								{{$paragraph |  fHTML}}
 						{{end}}
-						<br>
-					{{end}}
-
-	
-
-					<!--
-					{{range $idxElement, $lpElement := $lpBlock.Els }}
-						{{if  .Headline }}
-							<b>{{.Headline}}</b><br>
-						{{end}}
-						{{.Body}}<br>
-					{{end}}
-					-->
-				</div> <!-- /force-columnar-align-->
 
 
-			{{end}}	 <!-- end of block column -->
+					</div> <!-- /force-columnar-align-->
+				{{end}}	 <!-- /block column-->
 
-		{{end}}	 <!-- end of block -->
+
+			</div>
+		{{end}}	 <!-- /block -->
+
+
 	</div>
-	</span class='bl1-no-block-spaces' >
-
-
-{{end}}	
+	</span class='bl-no-block-spaces' >
+{{end}}	<!-- /corridor -->
 
 
 
