@@ -25,7 +25,7 @@ func generateRandomData(nColsViewPort int) {
 		vp.Cols = nColsViewPort
 	}
 	vp.Rows = rand.Intn(5) + 2
-	vp.CSS = util.CSSColumnsWidth(vp.Cols)
+	vp.CSS = util.CSSColumnsWidth(vp.Cols) + "\n" + util.CSSRowsHeight(vp.Rows)
 
 	nCorridors := rand.Intn(3) + 2
 	nCorridors = 3

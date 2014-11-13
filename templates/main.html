@@ -6,7 +6,8 @@
 	<title>Backend</title>
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
 </head>
-<link rel="stylesheet" href="/static/basic.css" media="screen" type="text/css" />
+<!-- the basic styles sheet somehow changes the borders  -->
+<link rel="stylesheet" href="/css/basic.css" media="screen" type="text/css" />
 <body>
 	<style>   
 		{{ .CSS | fCSS }}
@@ -24,6 +25,15 @@
 		}
 
 
+		/* 
+			Suppress spacing between inline blocks.
+
+			Give explicitly onto 
+				every corridor,  
+				every force-linebreak.
+			
+			Since inheritance is unreliable - and broken by i.e. *{font-size: 14px;}
+		*/
 		.bl-no-block-spaces {
 			font-size:0px;
 		}
@@ -54,36 +64,45 @@
 
 		}
 
-		/* This is the most delicate setting
-			it's the difference between wn and w1/w2...
+		/* 
+			This is the most delicate setting.
+			It's the difference between wn and w1/w2...
 			when too small, vertical aligment fails
-			when too large, blocks break into new lines
+			when too large, blocks break into new lines.
+
+			It relies on 
+				box-sizing: border-box; 
+			above, to make 
 
 			Test for all viewport widths
 
 			It needs to change for the rightmost column.
 
-			It could be switched right-side/left-side depending on the col size
+			TODO:
+			Make the longest column give the border.
+			We could make dyn. comparison between each two col,
+			and switch right-side/left-side depending on col height
+
 		 */
 		.col-border-inner {
-			margin-left: 4px;			
-			padding-right: 4px;
+			margin-left: 10px;			
+			padding-right: 10px;
 			border-right: 2px dotted #222;
 		}
 		.col-border-rightmost {
-			margin-left: 4px;	
-			padding-right: 6px;
+			margin-left: 10px;	
+			padding-right: 20px;
 			border-right: none;  /* must override border-inner*/
 		}
 
 
 		h2 {
 			font-size: 13px;
-			line-height: 16px;
+			line-height: 15px;
 			font-weight: bold;
 			padding: 0;
 			margin: 0;
-			margin-top: 6px;
+			margin-top: 2px;
 			margin-bottom: 2px;
 		}
 		p {
@@ -106,17 +125,22 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 {{ $mapOrArray := .Corridors }} 
 
 
+<!-- sadly needed to prevent gaps between corridors -->
+<span
+	name='wrap-all-corridors' 
+	class='bl-no-block-spaces' 
+>
+
 {{range $idxCorridor, $lpCorridor := .Corridors }}
 	<!-- a corridor-->
 
 	{{$colCorridor := fColorizer 0 $idxCorridor }}
 
-	<span class='bl-no-block-spaces' >
+
 	<div
 		name='corridor' 
-		class='blc w{{$lpCorridor.Cols}}' 
+		class='blc w{{$lpCorridor.Cols}} bl-no-block-spaces' 
 		style='
-			aafloat:left;
 			background-color:#{{$colCorridor}}; 
 			padding-bottom: 12px;
 		' 
@@ -168,9 +192,11 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 			{{end}}
 
 
+			<!--  requires bl-no-block-spaces 
+				to suppress space between force-columnar-align -->
 			<div 
 				name='block-wrapper'
-				class='blc  w{{.Cols}}' 
+				class='blc  w{{.Cols}} bl-no-block-spaces' 
 				style='
 					background-color:#{{$colorBlock}}; 
 					padding-bottom: 12px;
@@ -188,7 +214,7 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 					<div 
 						name='force-columnar-align'
-						class='blc wn bl-a1  col-border-inner {{if eq $idxCol $idxLastCol }} col-border-rightmost {{end}}
+						class='blc wn bl-a1   col-border-inner {{if eq $idxCol $idxLastCol }} col-border-rightmost {{end}}
 						' 
 						style='
 							aabackground-color:#{{$colorBlockCol}}; 
@@ -234,8 +260,10 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 
 	</div>
-	</span class='bl-no-block-spaces' >
 {{end}}	<!-- /corridor -->
+
+</span> <!--/wrap-all-corridors-->
+
 
 
 
