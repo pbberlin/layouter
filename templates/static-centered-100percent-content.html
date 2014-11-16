@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>CSS Layout - 100% height</title>
+	<style>
+		/**
+		* 100% height layout with header and footer
+		*/
+
+		html,body {
+			margin:0;
+			padding:0;
+			height:100%; /* needed for container min-height */
+			background:gray;
+
+			font-size:small;
+			color:#666;
+		}
+
+		h1 { 
+			font:1.5em georgia,serif; 
+			margin:0.5em 0;
+		}
+
+		h2 {
+			font:1.25em georgia,serif; 
+			margin:0 0 0.5em;
+		}
+		h1, h2, a {
+			color:orange;
+		}
+
+		p { 
+			line-height:1.5; 
+			margin:0 0 1em;
+		}
+
+		div#container {
+			position:relative; /* needed for footer positioning*/
+			margin:0 auto; /* center, not in IE5 */
+			width:750px;
+			background:#f0f0f0;
+
+			height:auto !important; /* real browsers */
+			height:100%; /* IE6: treaded as min-height*/
+
+			min-height:100%; /* real browsers */
+		}
+
+		div#header {
+			padding:1em;
+			background:#ddd url("../csslayout.gif") 98% 10px no-repeat;
+			border-bottom:6px double gray;
+		}
+		div#header p {
+			font-style:italic;
+			font-size:1.1em;
+			margin:0;
+		}
+
+		div#content {
+			padding:1em 1em 5em; /* bottom padding for footer */
+		}
+		div#content p {
+			text-align:justify;
+			padding:0 1em;
+		}
+
+		div#footer {
+			position:absolute;
+			width:100%;
+			bottom:0; /* stick to bottom */
+			background:#ddd;
+			border-top:6px double gray;
+		}
+		div#footer p {
+			padding:1em;
+			margin:0;
+		}
+	</style>
+</head>
+<body>	<div id="container">
+
+	<div id="header">
+		<h1>CSS layout: 100% height with header and footer</h1> 
+		<p>Sometimes things that used to be really simple with tables can still appear pretty hard with CSS. This layout for instance would consist of 3 cells; two with a fixed height, and a third one in the center filling up the remaining space. Using CSS, however, you have to take a different approach.</p>
+	</div>
+
+	<div id="content">
+		<h2>Min-height</h2>
+		<p>
+			The #container element of this page has a min-height of 100%. That way, if the content requires more height than the viewport provides, the height of #content forces #container to become longer as well.
+		</p>
+		<h2>Relative positioning</h2>
+		<p>
+			Because #container has a relative position, #footer will always remain at its bottom; since the min-height mentioned above does not prevent #container from scaling, this will work even if (or rather especially when) #content forces #container to become longer.
+		</p>
+		<h2>Padding-bottom</h2>
+		<p>
+			Since it is no longer in the normal flow, padding-bottom of #content now provides the space for the absolute #footer. This padding is included in the scrolled height by default, so that the footer will never overlap the above content.
+		</p>
+		<p>
+			Scale the text size a bit or resize your browser window to test this layout. The <a href="css/layout1.css">CSS file is over here</a>.
+		</p>
+		<p>
+			<a href="../css.html">Back to CSS Examples</a>
+		</p>
+	</div>
+
+	<div id="footer">
+		<p>
+			This footer is absolutely positioned to bottom:0; of  #container. The padding-bottom of #content keeps me from overlapping it when the page is longer than the viewport.
+		</p>
+	</div>
+</div>
+</body>

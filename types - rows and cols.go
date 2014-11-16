@@ -4,40 +4,52 @@ import (
 	"math/rand"
 )
 
-// TODO - take editorial contraints into account
 func (b *Block) ComputeRowsAndCols() {
 
 	if b.Els == nil || len(b.Els) == 0 {
 		panic("Set Elements first, then compute rows and cols number")
 	}
 
-	p := b.Parent
-
-	if p.Direction == Horizontal {
-		b.Rows = p.Rows
-		b.Cols = len(b.Els) / b.Rows
-		if len(b.Els)%b.Rows > 0 {
-			b.Cols++
+	// editorial constraints
+	if b.Fixed.Cols > 0 || b.Fixed.Rows > 0 {
+		if b.Fixed.Rows > 0 {
+			b.Rows = b.Fixed.Rows
+			b.Cols = len(b.Els) / b.Rows
+		}
+		if b.Fixed.Cols > 0 {
+			b.Cols = b.Fixed.Cols
+			b.Rows = len(b.Els) / b.Cols
 		}
 
 	} else {
-		b.Cols = p.Cols
-		b.Rows = len(b.Els) / b.Cols
-		if len(b.Els)%b.Cols > 0 {
-			b.Rows++
+		// inherit from corridor
+		par := b.Parent
+		if par.Direction == Horizontal {
+			b.Rows = par.Rows
+			b.Cols = len(b.Els) / b.Rows
+			if len(b.Els)%b.Rows > 0 {
+				b.Cols++
+			}
+
+		} else {
+			b.Cols = par.Cols
+			b.Rows = len(b.Els) / b.Cols
+			if len(b.Els)%b.Cols > 0 {
+				b.Rows++
+			}
 		}
 	}
 
 }
 
-func (c *Corridor) RandomizeDirectionAndRowsCols(isLast bool) {
+func (c *Corridor) RandomizeDirectionAndRowsCols(islastCG bool) {
 
 	p := c.Parent
 
-	// The last corridor completes/complements the parental viewport
+	// The lastCG corridor completes/complements the parental viewport
 	// TODO: Differentiate between
 	//   horizontally filling up and vertically filling up
-	if isLast {
+	if islastCG {
 		c.Direction = Horizontal
 		c.Fixed.Cols = p.Cols - p.ColsConsumed
 		c.Cols = c.Fixed.Cols

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	_ "github.com/davecgh/go-spew/spew"
 	"strings"
 )
@@ -59,14 +58,14 @@ func (b *Block) RebalanceElements() []string {
 			cntr++
 		}
 	}
-	//fmt.Println(spf("%s \n", spew.Sdump(all)))
+	//pf(spf("%s \n", spew.Sdump(all)))
 
 	// distribute
 	colCounter := 0
 	b.ElsPerCol = make([][]string, b.Cols)
 	b.ElsPerColSizes = make([]int, b.Cols)
 	idealColSize := sumSize / b.Cols
-	fmt.Println(sumSize, b.Cols, idealColSize)
+	//pf(sumSize, b.Cols, idealColSize)
 
 	colSizeAdder := 0
 	colElCounter := 0
@@ -88,7 +87,7 @@ func (b *Block) RebalanceElements() []string {
 		}
 
 	}
-	//fmt.Println(spf("%s \n", spew.Sdump(b.ElsPerCol)))
+	//pf(spf("%s \n", spew.Sdump(b.ElsPerCol)))
 
 	return []string{}
 }

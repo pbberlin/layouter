@@ -5,19 +5,17 @@ import (
 	"github.com/drhodes/golorem"
 	"github.com/pbberlin/tools/util"
 	"math/rand"
-	"time"
 )
 
 var e1 = El{"Headline 01", "http://www.google.com", "Body 01 Body 01 Body 01 Body 01 Body 01"}
 var e2 = El{"Headline 02", "http://www.microsoft.com", "Body 02 Body 02 Body 02"}
 
-var vp = Viewport{}
-
 func generateRandomData(nColsViewPort int) {
-	rand.Seed(time.Now().UnixNano())
 
 	//fmt.Printf("%s \n", spew.Sdump(vp))
-	vp = Viewport{}
+	vp := Viewport{}
+	mVp["vp1"] = &vp
+
 	if nColsViewPort < 1 {
 		vp.Cols = rand.Intn(5) + 2
 
@@ -95,5 +93,5 @@ func dumpAll(vp Viewport, level int) string {
 }
 
 func init() {
-	generateRandomData(0)
+	generateRandomData(4)
 }

@@ -31,6 +31,10 @@ package main
 
 */
 
+// mVp is the major "cache" for viewport structures
+var mVp = map[string]*Viewport{} // map of viewports
+
+//
 // An Element is a piece of unformatted textual or graphical content.
 // Similar to RSS atom.
 // It is small enough to be displayed into a part of a block
@@ -77,9 +81,10 @@ type Block struct {
 // Or grows vertical, constant cols.
 type Corridor struct {
 	Dims
-	Blocks []Block
-	Fixed  Dims // a shadow - with values set by the editor - not the computed ones
-	Parent *Viewport
+	Blocks       []Block
+	ColumnGroups [][]int // reference to []Block - dynamically allocated, according to corridor rows and cols
+	Fixed        Dims    // a shadow - with values set by the editor - not the computed ones
+	Parent       *Viewport
 }
 
 // Viewport contains the corridors

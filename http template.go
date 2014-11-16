@@ -24,17 +24,16 @@ func layoutHandler(w http.ResponseWriter, r *http.Request) {
 		"fAdd": func(x, y int) int {
 			return x + y
 		},
-		"fAttr": func(s string) tt.HTMLAttr {
-			// to attribute  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
-			return tt.HTMLAttr(s)
+		"fHTML": func(s string) tt.HTML {
+			// to CSS  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
+			return tt.HTML(s)
 		},
 		"fCSS": func(s string) tt.CSS {
 			// to CSS  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
 			return tt.CSS(s)
 		},
-		"fHTML": func(s string) tt.HTML {
-			// to CSS  - http://stackoverflow.com/questions/14765395/why-am-i-seeing-zgotmplz-in-my-go-html-template-output
-			return tt.HTML(s)
+		"fAttr": func(s string) tt.HTMLAttr {
+			return tt.HTMLAttr(s)
 		},
 	}
 
@@ -47,6 +46,7 @@ func layoutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	{
+		vp := viewportByURLParam(w, r)
 		err := tBase.Execute(w, vp)
 		if err != nil {
 			fmt.Fprintf(w, "%v <br>\n", err)

@@ -1,4 +1,12 @@
 
+	/* 
+		http://www.camma.ch/2010/01/12/css-layouts-mit-100-hoehe/ 
+		http://peterned.home.xs4all.nl/examples/csslayout1.html
+
+	*/
+	html,body {
+		height:100%; /* braucht es für die min-height des Containers */
+	}
 
 	* {
 
