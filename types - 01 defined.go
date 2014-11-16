@@ -81,10 +81,10 @@ type Block struct {
 // Or grows vertical, constant cols.
 type Corridor struct {
 	Dims
-	Blocks       []Block
-	ColumnGroups [][]int // reference to []Block - dynamically allocated, according to corridor rows and cols
-	Fixed        Dims    // a shadow - with values set by the editor - not the computed ones
-	Parent       *Viewport
+	Blocks        []Block
+	ColumnGroupsB [][]*Block // pointers to blocks in Blocks - dynamically allocated, according to corridor rows and cols
+	Fixed         Dims       // a shadow - with values set by the editor - not the computed ones
+	Parent        *Viewport
 }
 
 // Viewport contains the corridors

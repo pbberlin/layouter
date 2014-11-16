@@ -139,6 +139,20 @@
 			text-align: justify;
 		}
 
+
+		.debug-label{
+			display:inline-block;
+			position:absolute;
+			z-index: 100;
+			background-color:#fff;
+			border: 1px solid #000;
+			font-size:11px;
+			font-weight:normal;
+			padding: 1px 4px;
+			right:2px;
+			top:8px;
+		}
+
 	</style>
 
 
@@ -171,20 +185,8 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 	>
 
-		<div  name='debug_label_corridor' 
-				style='
-				display:inline-block;
-				background-color:#{{$colCorridor}};
-				position:absolute;
-				right:-8px;
-				top: -8px;
-				z-index: 100;
-				border: 1px solid #000;
-				font-size:11px;
-				font-weight:normal;
-				padding: 1px 4px;
-				'
-		>
+		<div  name='debug_label_corridor' class='debug-label'
+				style='right:-8px; top: -8px; ' >
 			Cor#{{fAdd $idxCorridor 1}}
 			{{if  .Direction }}
 				Horiz - {{.Cols}} Cols - {{ len .Blocks}} Blocks
@@ -195,7 +197,16 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 		</div> 
 
 		
-		{{range $idxBlock, $lpBlock := .Blocks }}
+		{{range $idxColumnGroup, $lpColumnGroup := .ColumnGroupsB }}
+			<!-- a column group -->
+			{{$FirstBlock :=  index $lpColumnGroup 0 }} 
+			<div class='blc bl-no-block-spaces w{{$FirstBlock.Cols}}'>
+				<div  name='debug_label_column_group'  class='debug-label'
+								style='right:2px; top: 11px; ' >
+					ColGroup #{{$idxColumnGroup}} 
+				</div> 
+
+		{{range $idxBlock, $lpBlock := $lpColumnGroup }}
 			<!-- a block-->
 
 			{{$colorBlock := fColorizer 1 $idxBlock }}
@@ -258,19 +269,7 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 						' 
 					>
 
-						<div  name='debug_label_block_column' 
-								style='
-								display:inline-block;
-								background-color:#fff;
-								position:absolute;
-								right:2px;
-								top:8px;
-								border: 1px solid #000;
-								font-size:11px;
-								font-weight:normal;
-								padding: 1px 4px;
-								'
-						>
+						<div  name='debug_label_block_column'  class='debug-label' >
 							{{$nElements := len $lpBlock.Els}}
 							{{if not $idxCol}}  <!-- show block info only with the first block column -->
 								B#{{fAdd $idxBlock 1}}  - 
@@ -294,6 +293,8 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 			</div>
 		{{end}}	 <!-- /block -->
+			</div>
+		{{end}}	 <!-- /column group -->
 
 
 	</div>  <!-- /corridor -->

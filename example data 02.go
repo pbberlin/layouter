@@ -94,7 +94,7 @@ func generateData02() {
 			i2l.RebalanceElements()
 
 		}
-		i1l.ColumnGrouping()
+		i1l.ColumnGroupingBlock()
 
 	}
 }

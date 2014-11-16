@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func layoutHandler(w http.ResponseWriter, r *http.Request) {
+func layoutHandler(w http.ResponseWriter, req *http.Request) {
 
 	funcMap := tt.FuncMap{
 		"fColorizer": colors.AlternatingColorShades,
@@ -37,16 +37,22 @@ func layoutHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
+	templateName := "main - plain blocks.html"
+	pTemplateName := req.FormValue("t")
+	if pTemplateName != "" {
+		templateName = pTemplateName
+	}
+
 	var err error
 	tBase := tt.New("tplBase").Funcs(funcMap)
-	tBase, err = tBase.ParseFiles("templates/main.html")
+	tBase, err = tBase.ParseFiles("templates/" + templateName)
 	if err != nil {
 		fmt.Fprintf(w, "%v <br>\n", err)
 		return
 	}
 
 	{
-		vp := viewportByURLParam(w, r)
+		vp := viewportByURLParam(w, req)
 		err := tBase.Execute(w, vp)
 		if err != nil {
 			fmt.Fprintf(w, "%v <br>\n", err)
