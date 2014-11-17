@@ -61,6 +61,7 @@ func generateData02() {
 			i2l := &i1l.Blocks[i2]
 			*i2l = Block{}
 			i2l.Parent = i1l
+			i2l.IdxEditorial = i2
 			if rand.Intn(3) < 1 {
 				i2l.Headline += lorem.Sentence(6, 16)
 			}

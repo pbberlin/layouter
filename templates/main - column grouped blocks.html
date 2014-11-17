@@ -42,10 +42,11 @@
 		.bl-h1 {
 			font-size:16px;
 			font-weight:bold;
+			line-height: 20px;
 
 
-			padding-top:4px;
-			padding-bottom:2px;
+			padding-top:5px;
+			padding-bottom:3px;
 
 			padding-left: 9px;
 
@@ -151,6 +152,7 @@
 			padding: 1px 4px;
 			right:2px;
 			top:8px;
+			aavisibility: hidden;
 		}
 
 	</style>
@@ -186,7 +188,7 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 	>
 
 		<div  name='debug_label_corridor' class='debug-label'
-				style='right:-8px; top: -8px; ' >
+				style='right:-12px; top: -8px; ' >
 			Cor#{{fAdd $idxCorridor 1}}
 			{{if  .Direction }}
 				Horiz - {{.Cols}} Cols - {{ len .Blocks}} Blocks
@@ -200,16 +202,15 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 		{{range $idxColumnGroup, $lpColumnGroup := .ColumnGroupsB }}
 			<!-- a column group -->
 			{{$FirstBlock :=  index $lpColumnGroup 0 }} 
-			<div class='blc bl-no-block-spaces w{{$FirstBlock.Cols}}'>
+			<div name='col-group-{{fAdd $idxColumnGroup 1}}'  class='blc bl-no-block-spaces w{{$FirstBlock.Cols}}'>
 				<div  name='debug_label_column_group'  class='debug-label'
-								style='right:2px; top: 11px; ' >
-					ColGroup #{{$idxColumnGroup}} 
+								style='right:2px; top: 12px; ' >
+					ColGroup #{{fAdd $idxColumnGroup 1}} 
 				</div> 
 
 		{{range $idxBlock, $lpBlock := $lpColumnGroup }}
 			<!-- a block-->
-
-			{{$colorBlock := fColorizer 1 $idxBlock }}
+			{{$colorBlock := fColorizer 1 $lpBlock.IdxEditorial }}
 
 
 
@@ -269,7 +270,7 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 						' 
 					>
 
-						<div  name='debug_label_block_column'  class='debug-label' >
+						<div  name='debug_label_block_column'  class='debug-label' style='top:32px;'>
 							{{$nElements := len $lpBlock.Els}}
 							{{if not $idxCol}}  <!-- show block info only with the first block column -->
 								B#{{fAdd $idxBlock 1}}  - 

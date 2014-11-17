@@ -66,6 +66,7 @@ type Dims struct {
 // Block is a rectangle, bracketing a number of elements
 type Block struct {
 	Dims
+	IdxEditorial   int // index in the initial "editorial" Slice
 	Parent         *Corridor
 	Headline       string // a block may have its own Headline
 	Subline        string // and Abstract
