@@ -70,6 +70,7 @@ func generateRandomData(nColsViewPort int) {
 			i2l.RebalanceElements()
 
 		}
+		i1l.ColumnGroupingBlock()
 
 	}
 }

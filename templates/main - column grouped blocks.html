@@ -8,6 +8,7 @@
 </head>
 <!-- the basic styles sheet somehow changes the borders  -->
 <link rel="stylesheet" href="/css/basic.css" media="screen" type="text/css" />
+<script type="text/javascript" src="/js/basic.js"></script>
 <body>
 	<style>   
 		{{ .CSS | fCSS }}
@@ -155,6 +156,12 @@
 			aavisibility: hidden;
 		}
 
+
+		/* in conjunction with contenteditable and tabbing */
+		:focus {
+			background: pink;
+		}
+
 	</style>
 
 
@@ -268,9 +275,10 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 						style='
 							aabackground-color:#{{$colorBlockCol}}; 
 						' 
+						contenteditable='true'
 					>
 
-						<div  name='debug_label_block_column'  class='debug-label' style='top:32px;'>
+						<div  name='debug_label_block_column'  class='debug-label' style='top:32px;'  contenteditable='false' >
 							{{$nElements := len $lpBlock.Els}}
 							{{if not $idxCol}}  <!-- show block info only with the first block column -->
 								B#{{fAdd $idxBlock 1}}  - 
@@ -306,7 +314,6 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 
 
 
-	<p><a href='/'>Back to root</a></p>
 
 </body>
 </html>

@@ -120,10 +120,10 @@ func (c *Corridor) ColumnGroupingBlock() {
 
 		//
 		// CG line break
-		var newRow string = ""
+		var newRow string = "       "
 		if true &&
 			idxBlock == 0 || // first CG line ?
-			corrColsCntr >= corrMaxCols && // new CG line ? - *wrap around condition*
+			corrColsCntr > corrMaxCols && // new CG line ? - *wrap around condition*
 				true {
 
 			clgrMaxRows = lpBlock.Rows // set CG max rows - depending on newline
@@ -137,7 +137,7 @@ func (c *Corridor) ColumnGroupingBlock() {
 
 			corrClGrRowsCntr++ // but unused
 
-			newRow = " new row"
+			newRow = "new row"
 
 		}
 
@@ -151,64 +151,18 @@ func (c *Corridor) ColumnGroupingBlock() {
 		// Now open new column group
 		if true && (expandableHor || expandableVer) &&
 			true {
-
-			// if expandableHor {
-			// 	clgrRowsCntr = 0
-			// }
-			// if expandableVer {
-			// 	clgrColsCntr = 0
-			// }
-			// clgrRowsCntr = 0
-			// clgrColsCntr = 0
 			clgrColsCntr = lpBlock.Cols
 			clgrRowsCntr = lpBlock.Rows
 
 			clgrMaxCols = lpBlock.Cols // set CG max cols - depending on first block
 			c.ColumnGroupsB = appendColumnGroup(c.ColumnGroupsB)
 			appendBlock(c.ColumnGroupsB, lpBlock)
-			pf("\t\tcg-b     B%v - %v %v - %v - %v\n", idxBlock, len(c.ColumnGroupsB),
-				len(c.ColumnGroupsB[len(c.ColumnGroupsB)-1]), dirMsg, newRow)
+			pf("\t\tcg-b     B%v - %v %v - %v - %v - %v %v\n", idxBlock, len(c.ColumnGroupsB),
+				len(c.ColumnGroupsB[len(c.ColumnGroupsB)-1]), dirMsg, newRow, clgrMaxRows, clgrMaxCols)
 			clgrIsOpened = true // remember an open CG
+
 			continue
 		}
-
-		// // begin of new column group - open to amends
-		// if doOpenCG {
-		// 	clgrMaxCols = lpBlock.Cols // not
-		// 	c.ColumnGroupsB = appendColumnGroup(c.ColumnGroupsB)
-		// 	appendBlock(c.ColumnGroupsB, lpBlock)
-		// 	pf(" ----cg-b  -  %v - %v %v\n", idxBlock, len(c.ColumnGroupsB), len(c.ColumnGroupsB[len(c.ColumnGroupsB)-1]))
-		// }
-
-		// // continue column group
-		// if true &&
-		// 	clgrRowsCntr != 0 &&
-		// 	clgrRowsCntr <= clgrMaxRows &&
-		// 	clgrColsCntr <= corrMaxCols &&
-		// 	(clgrRowsCntr <= corrMaxRows || clgrColsCntr <= clgrMaxCols) &&
-		// 	true { // the last condition holds
-		// 	keepOpenCG = true
-		// 	appendBlock(c.ColumnGroupsB, lpBlock)
-		// 	pf(" ----cg-c  -  %v %v\n", len(c.ColumnGroupsB), len(c.ColumnGroupsB[len(c.ColumnGroupsB)-1]))
-		// 	clgrRowsCntr += lpBlock.Rows
-		// 	clgrColsCntr += lpBlock.Cols
-		// 	if clgrColsCntr >= clgrMaxCols {
-		// 		clgrColsCntr = 0
-		// 	}
-		// 	continue
-		// }
-
-		// if keepOpenCG {
-		// 	// END of column group
-		// 	// overflow of current column group
-		// 	appendBlock(c.ColumnGroupsB, lpBlock)
-		// 	pf(" ----cg- e -  %v %v\n", len(c.ColumnGroupsB), len(c.ColumnGroupsB[len(c.ColumnGroupsB)-1]))
-		// 	clgrRowsCntr = 0
-		// 	clgrColsCntr = 0
-		// 	clgrMaxCols = 0
-		// 	continue
-
-		// }
 
 		panic("if cases should soak up all possibilities \n  a block may be too large or tall ")
 

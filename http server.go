@@ -36,6 +36,7 @@ func init() {
 	// static resources - other
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./css/"))))
+	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./js/"))))
 
 	fmt.Println("listening on 4000")
 	http.ListenAndServe("localhost:4000", nil)

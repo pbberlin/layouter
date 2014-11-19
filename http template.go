@@ -38,6 +38,7 @@ func layoutHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	templateName := "main - plain blocks.html"
+	templateName = "main - column grouped blocks.html"
 	pTemplateName := req.FormValue("t")
 	if pTemplateName != "" {
 		templateName = pTemplateName
