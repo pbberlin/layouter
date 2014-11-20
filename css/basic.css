@@ -2,32 +2,19 @@
 	/* 
 		http://www.camma.ch/2010/01/12/css-layouts-mit-100-hoehe/ 
 		http://peterned.home.xs4all.nl/examples/csslayout1.html
-
 	*/
-	html,body {
-		height:100%; /* braucht es für die min-height des Containers */
-	}
 
 	* {
-
+		margin: 0px;
+		padding: 0px;
 		/* if this causes columns to overflow,
 			then some intermittent/organizing div has no explicit 
 			font-size: 0px
 		*/
-		font-size: 14px; 
-	
+		font-size: 14px; 	
 		line-height: 140%;
 		font-family: 'Open Sans', 'Times New Roman';
-		
-
 	}
-
-	* {
-	
-		margin: 0px;
-		padding: 0px;
-	}
-	
 	* {
 		/* width not changed by padding or border-width */	
 	   -webkit-box-sizing: border-box;	
@@ -38,30 +25,65 @@
 	}
 
 
+	html,body {
+		height:100%;  			/* for needed for #vp-container min-height */
+		background:#fff;		/* totally blanked out by #vp-container */
+	}
+	html {
+		overflow-y: scroll;  	/* force scrollbar always*/
+	}
+
+
+
+	#vp-container {
+		position: relative;      /* for footer positioning */
+		margin: 0 auto;          /* center, not in IE5 */
+		background: #eee;
+		height:auto !important; /* real browsers */
+		height:100%;            /* IE6: treaded as min-height*/
+		min-height:100%;        /* real browsers */
+		width: 100%;
+	}
+		#vp-header {
+			padding:1em;
+			background-color: #ccc;
+			border-bottom: 4px double gray;
+		}
+		#vp-content {
+			aapadding:1em; 
+			padding-bottom: 5em;  /* bottom padding for footer */
+		text-align: center;
+		}
+		#vp-footer {
+			padding:1em;
+			position:absolute;      /* relative to vp-container */
+			width:100%;
+			bottom:0;               /* stick to bottom */
+			background:#ddd;
+			border-top: 4px double gray;
+		}
+
+
+	
+
 	* {
 		/* 
-			hyphenation
-			requires lang='de'  or lang='en' attribute in tag 
+			hyphenation - requires lang='de'  or lang='en' attribute in tag 
 		*/
 		-webkit-hyphens: auto;
 		   -moz-hyphens: auto;
 		    -ms-hyphens: auto;
 		        hyphens: auto; 	
 		hyphenate-limit-chars: auto 3;
-		hyphenate-limit-lines: 2;        
-		
+		hyphenate-limit-lines: 2;        		
 	}
 
 
-	/* force scrollbar always*/
-	html {
-		overflow-y: scroll;
+
+	h1, h2, .bl-h1, a {
+		color:orange;
 	}
 
-	a {
-		font-size: 100%;
-	}
-	
 	pre {
 		font-size: 12px;
 		font-family: "Lucida Console", Monaco, monospace	

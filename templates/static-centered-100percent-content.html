@@ -22,12 +22,10 @@
 
 		h1 { 
 			font:1.5em georgia,serif; 
-			margin:0.5em 0;
 		}
 
 		h2 {
 			font:1.25em georgia,serif; 
-			margin:0 0 0.5em;
 		}
 		h1, h2, a {
 			color:orange;
@@ -35,61 +33,54 @@
 
 		p { 
 			line-height:1.5; 
-			margin:0 0 1em;
+			text-align:justify;
+			padding: 0.5em;
+			margin:0 0 0.5em;
 		}
 
-		div#container {
-			position:relative; /* needed for footer positioning*/
-			margin:0 auto; /* center, not in IE5 */
-			width:750px;
-			background:#f0f0f0;
+		#vp-container {
+			position: relative;      /* needed for footer positioning*/
+			margin: 0 auto;          /* center, not in IE5 */
+			width: 44%;
+			background: #eee;
 
 			height:auto !important; /* real browsers */
-			height:100%; /* IE6: treaded as min-height*/
-
-			min-height:100%; /* real browsers */
+			height:100%;            /* IE6: treaded as min-height*/
+			min-height:100%;        /* real browsers */
 		}
 
-		div#header {
+		#vp-header {
 			padding:1em;
-			background:#ddd url("../csslayout.gif") 98% 10px no-repeat;
-			border-bottom:6px double gray;
-		}
-		div#header p {
-			font-style:italic;
-			font-size:1.1em;
-			margin:0;
+			background-color: #ccc;
+			border-bottom: 4px double gray;
 		}
 
-		div#content {
+		#vp-content {
 			padding:1em 1em 5em; /* bottom padding for footer */
 		}
-		div#content p {
-			text-align:justify;
-			padding:0 1em;
+
+		#vp-footer {
+			position:absolute;      /* relative to */
+			width:100%;
+			bottom:0;               /* stick to bottom */
+			background:#ddd;
+			border-top: 4px double gray;
 		}
 
-		div#footer {
-			position:absolute;
-			width:100%;
-			bottom:0; /* stick to bottom */
-			background:#ddd;
-			border-top:6px double gray;
-		}
-		div#footer p {
-			padding:1em;
-			margin:0;
-		}
 	</style>
 </head>
-<body>	<div id="container">
+<body>	
 
-	<div id="header">
+<div id="vp-container">
+
+	<div id="vp-header">
 		<h1>CSS layout: 100% height with header and footer</h1> 
-		<p>Sometimes things that used to be really simple with tables can still appear pretty hard with CSS. This layout for instance would consist of 3 cells; two with a fixed height, and a third one in the center filling up the remaining space. Using CSS, however, you have to take a different approach.</p>
+		<p>Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. Ta lara dara dah. 
+
+		</p>
 	</div>
 
-	<div id="content">
+	<div id="vp-content">
 		<h2>Min-height</h2>
 		<p>
 			The #container element of this page has a min-height of 100%. That way, if the content requires more height than the viewport provides, the height of #content forces #container to become longer as well.
@@ -102,15 +93,10 @@
 		<p>
 			Since it is no longer in the normal flow, padding-bottom of #content now provides the space for the absolute #footer. This padding is included in the scrolled height by default, so that the footer will never overlap the above content.
 		</p>
-		<p>
-			Scale the text size a bit or resize your browser window to test this layout. The <a href="css/layout1.css">CSS file is over here</a>.
-		</p>
-		<p>
-			<a href="../css.html">Back to CSS Examples</a>
-		</p>
+
 	</div>
 
-	<div id="footer">
+	<div id="vp-footer">
 		<p>
 			This footer is absolutely positioned to bottom:0; of  #container. The padding-bottom of #content keeps me from overlapping it when the page is longer than the viewport.
 		</p>

@@ -4,12 +4,12 @@
 	<meta charset="utf-8">
 	<link rel="icon" href="data:;base64,=">
 	<title>Backend</title>
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">	
+	<link rel="stylesheet" href="/css/basic.css" media="screen" type="text/css" />
+	<script type="text/javascript" src="/js/basic.js"></script>
+	<script src="/js/angular.min.js"></script>
+	<script src="/js/angular-route.min.js"></script>
 </head>
-<!-- the basic styles sheet somehow changes the borders  -->
-<link rel="stylesheet" href="/css/basic.css" media="screen" type="text/css" />
-<script type="text/javascript" src="/js/basic.js"></script>
-<body>
 	<style>   
 		{{ .CSS | fCSS }}
 	</style>
@@ -163,13 +163,20 @@
 		}
 
 	</style>
+<body>
 
+<div id='vp-container'>
+	
+<div id='vp-header'>
+	Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
+	{{ len .Corridors}} Corridors<br>
 
-Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
-{{ len .Corridors}} Corridors<br>
+	{{ $Corridors  := .Corridors }} 
+	{{ $mapOrArray := .Corridors }} 	
 
-{{ $Corridors  := .Corridors }} 
-{{ $mapOrArray := .Corridors }} 
+</div>
+<div id='vp-content'>
+
 
 
 <!-- sadly needed to prevent gaps between corridors -->
@@ -309,11 +316,16 @@ Viewport Rows-Cols: {{.Rows}} {{.Cols}} <br>
 	</div>  <!-- /corridor -->
 {{end}}	
 </span>     <!--/wrap-all-corridors-->
+</div>  <!-- /vp-content -->
 
 
+<div id='vp-footer'>
+	<a href='/raw?vp=vp1' target='_admin'>Dump - Raw View</a> &nbsp; 
+	<br>
+	<a href='/randomize?vp=vp1'  target='_admin'>Generate new random data set</a>
+</div>  <!-- /vp-footer -->
 
-
-
+</div>  <!-- /vp-container -->
 
 </body>
 </html>
