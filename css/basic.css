@@ -14,6 +14,7 @@
 		font-size: 14px; 	
 		line-height: 140%;
 		font-family: 'Open Sans', 'Times New Roman';
+		text-align: left;
 	}
 	* {
 		/* width not changed by padding or border-width */	
@@ -38,28 +39,28 @@
 	#vp-container {
 		position: relative;      /* for footer positioning */
 		margin: 0 auto;          /* center, not in IE5 */
-		background: #eee;
+		background-color: #aaa;
 		height:auto !important; /* real browsers */
 		height:100%;            /* IE6: treaded as min-height*/
 		min-height:100%;        /* real browsers */
 		width: 100%;
 	}
 		#vp-header {
-			padding:1em;
-			background-color: #ccc;
+			padding:0.5em 1em;
 			border-bottom: 4px double gray;
 		}
 		#vp-content {
-			aapadding:1em; 
+			text-align: center;
+			background-color: #ddd;
 			padding-bottom: 5em;  /* bottom padding for footer */
-		text-align: center;
 		}
 		#vp-footer {
-			padding:1em;
 			position:absolute;      /* relative to vp-container */
 			width:100%;
 			bottom:0;               /* stick to bottom */
-			background:#ddd;
+
+			padding:0.5em 1em;
+			background-color: #aaa;
 			border-top: 4px double gray;
 		}
 

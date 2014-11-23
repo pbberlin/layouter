@@ -1,0 +1,189 @@
+{{define "tplBase"}}<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="icon" href="data:;base64,=">
+	<title>Backend</title>
+<!--	
+-->
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">	 
+	<link rel="stylesheet" href="/css/basic.css" media="screen" type="text/css" />
+	<script src="/js/angular.js"></script>
+	<script src="/js/angular-route.js"></script>
+	<script src="/js/app.js"></script>
+</head>
+
+	<style>
+
+
+		/* basic inlince block style */
+		.blc {
+			display:inline-block;
+			vertical-align:top;
+			position:relative;
+			margin: 0px;
+		}
+
+
+		/* 
+			Suppress spacing between inline blocks.
+
+			Give explicitly onto 
+				every corridor,  
+				every force-linebreak.
+			
+			Since inheritance is unreliable - and broken by i.e. *{font-size: 14px;}
+		*/
+		.bl-no-block-spaces {
+			font-size:0px;
+		}
+
+		/* level1 - block - fonts and margins */
+		.bl-h1 {
+			font-size:16px;
+			font-weight:bold;
+			line-height: 20px;
+
+
+			padding-top:5px;
+			padding-bottom:3px;
+
+			padding-left: 9px;
+
+			width:98%;
+			background-color: #ccc;
+			opacity: 0.9;
+
+		}
+
+
+		/* default attributes fonts and margins */
+		.bl-a1 {
+			font-size: 12px;		
+
+			margin: 0px;
+			margin-top: 2px
+			margin-bottom:8px;
+
+			padding-bottom:10px;
+
+		}
+
+		/* 
+			This is the most delicate setting.
+			It's the difference between wn and w1/w2...
+			when too small, vertical aligment fails
+			when too large, blocks break into new lines.
+
+			It relies on 
+				box-sizing: border-box; 
+			above, to make 
+
+			Test for all viewport widths
+
+			It needs to change for the rightmost column.
+
+			TODO:
+			Make the longest column give the border.
+			We could make dyn. comparison between each two col,
+			and switch right-side/left-side depending on col height
+
+		 */
+		.col-border-inner {
+			margin-left: 10px;			
+			padding-right: 10px;
+			aaborder-right: 2px dotted #222;
+		}
+		.col-border-rightmost {
+			margin-left: 10px;	
+			padding-right: 20px;
+			aaborder-right: none;  /* must override border-inner*/
+		}
+
+
+
+		/* borders in a separate layer */
+		.borders-separated-layer{
+			position:absolute;
+			height: 98%;
+			z-index: -1
+			background-color: none;
+		}
+
+		.borders-separated-el{
+			display:inline-block;
+			vertical-align:top;			
+			height: 100%;
+			border-right: 2px dotted  #222;
+			margin-right: -4px;	/* this seems to work - but why ??? */
+		}
+
+
+
+
+		h2 {
+			font-size: 13px;
+			line-height: 15px;
+			font-weight: bold;
+			padding: 0;
+			margin: 0;
+			margin-top: 2px;
+			margin-bottom: 2px;
+		}
+		p {
+			font-size: 12px;
+			line-height: 15px;
+			padding: 0;
+			margin: 0;
+			margin-bottom: 7px;
+
+			text-align: justify;
+		}
+
+
+		.debug-label{
+			display:inline-block;
+			position:absolute;
+			z-index: 100;
+			background-color:#fff;
+			border: 1px solid #000;
+			font-size:11px;
+			font-weight:normal;
+			padding: 1px 4px;
+			right:2px;
+			top:8px;
+			aavisibility: hidden;
+		}
+
+
+		/* in conjunction with contenteditable and tabbing */
+		:focus {
+			background: pink;
+		}
+
+	</style>
+
+<body ng-app="layouterApp">
+
+<div id='vp-container'>
+	
+<div id='vp-header'>
+	vp header <br>
+	<span style='font-size:smaller'>get from tpl vp-header01.html</span>
+</div>
+<div id='vp-content'>
+	<ng-view/>
+</div>  <!-- /vp-content -->
+
+
+<div id='vp-footer'>
+	<a href='/raw?vp=vp1' target='_admin'>Dump - Raw View</a> &nbsp; 
+	<br>
+	<a href='/randomize?vp=vp1&nColsViewport=5'  target='_admin'>Generate new random data set</a>
+</div>  <!-- /vp-footer -->
+
+</div>  <!-- /vp-container -->
+
+</body>
+</html>
+{{end}}

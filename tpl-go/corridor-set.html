@@ -1,0 +1,143 @@
+{{define "tplBase"}}
+<style>   
+	{{ .CSS | fCSS }}
+</style>
+
+<!-- sadly needed to prevent gaps between corridors -->
+<span
+	name='wrap-all-corridors' 
+	class='bl-no-block-spaces' 
+>
+
+{{range $idxCorridor, $lpCorridor := .Corridors }}
+	<!-- a corridor-->
+
+	{{$colCorridor := fColorizer 0 $idxCorridor }}
+
+
+	<div
+		name='corridor' 
+		class='blc w{{$lpCorridor.Cols}} bl-no-block-spaces' 
+		style='
+			background-color:#{{$colCorridor}}; 
+			padding-bottom: 12px;
+		' 
+
+	>
+
+		<div  name='debug_label_corridor' class='debug-label'
+				style='right:-12px; top: -8px; ' >
+			Cor#{{fAdd $idxCorridor 1}}
+			{{if  .Direction }}
+				Horiz - {{.Cols}} Cols - {{ len .Blocks}} Blocks
+			{{else}}
+				Vertic - {{.Rows}} Rows  - {{ len .Blocks}} Blocks
+			{{end}}
+
+		</div> 
+
+		
+		{{range $idxColumnGroup, $lpColumnGroup := .ColumnGroupsB }}
+			<!-- a column group -->
+			{{$FirstBlock :=  index $lpColumnGroup 0 }} 
+			<div name='col-group-{{fAdd $idxColumnGroup 1}}'  class='blc bl-no-block-spaces w{{$FirstBlock.Cols}}'>
+				<div  name='debug_label_column_group'  class='debug-label'
+								style='right:2px; top: 12px; ' >
+					ColGroup #{{fAdd $idxColumnGroup 1}} 
+				</div> 
+
+		{{range $idxBlock, $lpBlock := $lpColumnGroup }}
+			<!-- a block-->
+			{{$colorBlock := fColorizer 1 $lpBlock.IdxEditorial }}
+
+
+
+
+
+			<!--  requires bl-no-block-spaces 
+				to suppress space between force-columnar-align -->
+			<div 
+				name='block-wrapper'
+				class='blc  w{{.Cols}} bl-no-block-spaces' 
+				style='
+					background-color:#{{$colorBlock}}; 
+					padding-bottom: 12px;
+				' 
+			>
+
+
+
+				{{$idxLastCol := len .ElsPerCol}}
+				{{$idxLastCol := fAdd $idxLastCol -1}}
+
+
+				<div name='bs-all' class='borders-separated-layer' >
+				{{range  $idxCol, $colParagraphs :=  .ElsPerCol }}
+					{{if lt $idxCol $idxLastCol }}
+						<div name='bs-s' class='borders-separated-el w1' ></div>
+					{{end}}				
+					
+				{{end}}
+				</div>
+
+				<!-- block headline -->
+				{{if  .Headline }}
+					<span class='blc bl-h1'  style='background-color:#{{$colorBlock}}'>
+						{{ .Headline  }}   
+					</span> 
+				{{end}}
+
+
+
+
+
+				{{range  $idxCol, $colParagraphs :=  .ElsPerCol }}
+				<!-- a block COLUMN -->
+
+
+					{{$colorBlockCol := fColorizer 2 $idxCol }}
+
+
+
+					<div 
+						name='force-columnar-align'
+						class='blc wn bl-a1   col-border-inner {{if eq $idxCol $idxLastCol }} col-border-rightmost {{end}}
+						' 
+						style='
+							aabackground-color:#{{$colorBlockCol}}; 
+						' 
+						contenteditable='true'
+					>
+
+						<div  name='debug_label_block_column'  class='debug-label' style='top:32px;'  contenteditable='false' >
+							{{$nElements := len $lpBlock.Els}}
+							{{if not $idxCol}}  <!-- show block info only with the first block column -->
+								B#{{fAdd $idxBlock 1}}  - 
+								  {{$lpBlock.Rows}}R{{$lpBlock.Cols}}C{{$nElements}}Els
+								  Col#{{fAdd $idxCol 1}} 
+							{{else}}
+								Col#{{fAdd $idxCol 1}}
+							{{end}}
+						</div> 
+						
+
+
+						{{range  $idxParagraph, $paragraph :=  $colParagraphs }}
+								{{$paragraph |  fHTML}}
+						{{end}}
+
+
+					</div> <!-- /force-columnar-align-->
+				{{end}}	 <!-- /block column-->
+
+
+			</div>
+		{{end}}	 <!-- /block -->
+			</div>
+		{{end}}	 <!-- /column group -->
+
+
+	</div>  <!-- /corridor -->
+{{end}}	
+</span>     <!--/wrap-all-corridors-->
+{{end}}
