@@ -70,6 +70,7 @@
 	* {
 		/* 
 			hyphenation - requires lang='de'  or lang='en' attribute in tag 
+			chrome/android have NO hyphenation capability
 		*/
 		-webkit-hyphens: auto;
 		   -moz-hyphens: auto;

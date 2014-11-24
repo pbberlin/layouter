@@ -129,12 +129,27 @@ var fctController02 = function nameNotNeeded($scope, $http) {
 
 	
 	$scope.spice = 'very';
-	$scope.chiliSpicy = function() {
-		$scope.spice = 'chili';
-	};
 	$scope.jalapenoSpicy = function() {
 		$scope.spice = 'jalapeño';
 	};   
+
+
+	var spiceIter = function() {
+		flavors = ['tastless','spicy','revolting','sweety','juicy','sour']
+		cntr = 0
+		return function() {
+			cntr++
+			idx = cntr % flavors.length
+			flavor = flavors[idx]
+			return flavor
+		}
+		//$scope.spice = 'jalapeño';
+	};   
+	spiceIterInst = spiceIter()
+	$scope.iterFlavors = function() {
+		$scope.spice = spiceIterInst();
+	};   
+
 }
 
 

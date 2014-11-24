@@ -1,13 +1,20 @@
-<input type="text" ng-model="search"> - Du suchst gerade nach: {{search}}
+<div style='margin-bottom:31px;'>
+	<input type="text" ng-model="search">
+	<p ng-show="search" style='line-height:11px;'>Du suchst gerade nach: {{search}}
+		<span style='font-size:9px'><br>ng-show => invisible if model var is empty</span>
+	</p>
+	
+</div>
 
 <div ng-controller="controller02">
-	 <button ng-click="chiliSpicy()">Chili</button>
-	 <button ng-click="jalapenoSpicy()">Jalapeño</button>
 	 <p>The food is {{spice}} spicy!</p>
+	 <button ng-click="jalapenoSpicy()">Jalapeño</button>
+	 <button ng-click="iterFlavors()">iter Flavors</button>
+	 <br><br>
 	 <br><br>
 	 <input type="text" ng-model="user">
 	 <input type="text" ng-model="password">
 	 <button ng-click="requestNow()"> RequestNow </button><br>
-	 userLoggedIn {{userLoggedIn}}<br>
+	 userLoggedIn {{userLoggedIn.toString().toUpperCase() }}<br>
 
 </div>
