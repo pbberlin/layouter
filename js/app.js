@@ -1,30 +1,3 @@
-function MainCtrl($scope, $http) {
-    $http.get('/login', {
-        username: $scope.user,
-        password: $scope.password,
-    })
-    .success(function(data, status, headers, config) {
-        $scope.userLoggedIn = data.isLoginValid;
-    })
-    .error(function(err, status, headers, config) {
-        console.log("Well, this is embarassing.");
-    });
-}
-
-var Person = function function_name (name, age) {
-	// interpreter creates obj = createObject('Person'); this = obj // obj has a .prototype Fallback
-	this.name = name;
-	this.age = age;
-}
-Person.prototype.introduceMyself = function(prefix) {
-	alert( prefix + " - " + this.name + " - " + this.age)
-};
-var iche = new Person("Peter",27);
-//alert(iche.introduceMyself("Präambel: "));
-
-
-
-//---------------------------------------------------------------
 var layouterAppModule = angular.module('layouterApp', ['ngRoute']);  
 
 layouterAppModule.config(['$routeProvider', function($routeProvider) {
@@ -49,8 +22,8 @@ layouterAppModule.config(['$routeProvider', function($routeProvider) {
       templateUrl: '/tpl-ng/try.html'
     })
     .when('/url-x', {
-      controller: 'controller-DIFFERENT',
-      templateUrl: '/tpl-ng/test01.html'
+      controller: 'controller02',
+      templateUrl: '/tpl-ng/try.html'
     })
     .otherwise({
       redirectTo: '/'
@@ -133,3 +106,39 @@ layouterAppModule.factory('Service02', ['$http', '$q', function($http, $q) {
 }]);
 
 
+
+
+var fctController02 = function nameNotNeeded($scope, $http) {
+
+	$scope.user = "email or customer id"
+	$scope.userLoggedIn = false
+
+	$scope.requestNow = function() {
+		$http.get('/tpl-ng/01.json', {
+			username: $scope.user,
+			password: $scope.password,
+		})
+		.success(function(data, status, headers, config) {
+			$scope.userLoggedIn = data.isLoginValid;
+			console.log(data);
+		})
+		.error(function(err, status, headers, config) {
+			console.log("Well, this is embarassing.");
+		});
+	};
+
+	
+	$scope.spice = 'very';
+	$scope.chiliSpicy = function() {
+		$scope.spice = 'chili';
+	};
+	$scope.jalapenoSpicy = function() {
+		$scope.spice = 'jalapeño';
+	};   
+}
+
+
+
+
+
+layouterAppModule.controller('controller02', ['$scope',  '$http', fctController02] );

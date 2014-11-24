@@ -1,4 +1,5 @@
 {
   "title": "Some My Title",
-  "description": "This is my description, residing in a static JSON file."
+  "description": "This is my description, residing in a static JSON file.",
+  "isLoginValid": true
 }
