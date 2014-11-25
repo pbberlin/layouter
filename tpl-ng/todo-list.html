@@ -1,0 +1,13 @@
+<div ng-controller='controller05'>
+	
+
+	<input ng-model='newTodo' > <input type='submit' value=' add new todo '  ng-click='addTodo()'>
+
+	<div ng-repeat='(idx, obj) in todoList'>
+		<input type='checkbox' ng-model='obj.done'  > {{obj.task}} | {{obj.until}} <br>
+	</div>	
+	<input type='submit' value=' remove '  ng-click='removeSelected()'>
+	{{todoList}}
+
+
+</div>

@@ -2,11 +2,11 @@
 	<input type="text" ng-model="search">
 	<p ng-show="search" style='line-height:11px;'>Du suchst gerade nach: {{search}}
 		<span style='font-size:9px'><br>ng-show => invisible if model var is empty</span>
-	</p>
-	
+	</p>	
 </div>
 
-<div ng-controller="controller02">
+
+<div style='margin-bottom:31px;' ng-controller="controller02" >
 	 <p>The food is {{spice}} spicy!</p>
 	 <button ng-click="jalapenoSpicy()">Jalapeño</button>
 	 <button ng-click="iterFlavors()">iter Flavors</button>
@@ -18,3 +18,48 @@
 	 userLoggedIn {{userLoggedIn.toString().toUpperCase() }}<br>
 
 </div>
+
+
+
+<div style='margin-bottom:31px;' 
+  ng-app="app02" ng-init="quantity=1;price=5" 
+>
+	Quantity: <input type="number"	ng-model="quantity" >
+	Costs:    <input type="number"  ng-model="price">  =>
+	Total in dollar: {{ quantity * price }}
+</div>
+
+
+
+<div 
+	style='margin-bottom:31px;'  
+    ng-controller="controller04" 
+>
+	First Name: <input type="text" ng-model="firstName"><br>
+	Last Name:  <input type="text" ng-model="lastName"><br>
+	Full Name: {{firstName + " " + lastName}}
+</div>
+
+
+
+
+<div  ng-controller="formController">
+	<form name='myForm' novalidate>
+		<div  style='display:inline-block; width:20%' >
+			First Name: <input type="text"  ng-model="user.firstName"><br>
+			Last Name:  <input type="text"  ng-model="user.lastName"><br>
+			Email:      <input type="email" ng-model="user.email" required  name="email" >
+			<span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+				<span ng-show="myForm.email.$error.required">Email is required.</span>
+				<span ng-show="myForm.email.$error.email">Invalid email address.</span>
+			</span>
+		</div>
+		<div  style='display:inline-block; width:40%' >
+			<input type="submit"
+				ng-disabled="false || myForm.email.$dirty && myForm.email.$invalid">
+				form = {{user}}<br>
+			<button ng-click="fillDefaults()">Reset</button>
+		</div>
+	</form>
+</div>
+
