@@ -3,6 +3,7 @@
 var app01 = angular.module('layouterApp', ['ngRoute']);  
 
 
+
 app01.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 	.when('/', {
@@ -23,6 +24,10 @@ app01.config(['$routeProvider', function($routeProvider) {
 	.when('/try', {
 		controller: 'controller01',
 		templateUrl: '/tpl-ng/try.html'
+	})
+	.when('/tabbing-fontsizing', {
+		controller: 'controller01',
+		templateUrl: '/tpl-ng/tabbing-fontsizing.html'
 	})
 	.when('/todo-list', {
 		controller: 'controller01',
@@ -169,32 +174,31 @@ app01.controller('controller02', ['$scope',  '$http', fctController02] );
 var app02 = angular.module("app02", []);
 
 
-var fctTmp1 = function($scope) {
+var fctController04 = function($scope) {
 	$scope.firstName = "John";
 	$scope.lastName  = "Doe";
 }
-app01.controller('controller04', ['$scope', fctTmp1] );
+app01.controller('controller04', ['$scope', fctController04] );
 
 
 
 
 
-var fctTmp2 = function($scope) {
+var fctControllerForm = function($scope) {
 	$scope.defaultData = {firstName: "John", lastName: "Doe", email: "Enter Valid Email"};
 	$scope.fillDefaults = function() {
 		$scope.user = angular.copy($scope.defaultData);
 	};
 	$scope.fillDefaults();
 };
-app01.controller('formController', ['$scope', fctTmp2] );
+app01.controller('formController', ['$scope', fctControllerForm] );
 
 
 
 
-var fctTmp3 = function($scope) {
+var fctController05 = function($scope) {
 
 	$scope.newTodo = "blab blupp"
-
 	$scope.alternator = false;
 
 	$scope.todoList = [{task:"clean house",until:"22-12",done:false},
@@ -218,10 +222,85 @@ var fctTmp3 = function($scope) {
 		});		
 		$scope.todoList = updatedTodo
 	}
-};
-app01.controller('controller05', ['$scope', fctTmp3] );
 
+
+};
+app01.controller('controller05', ['$scope', fctController05] );
+
+
+
+var fctController06 = function($scope,$window) {
+
+	$scope.focusedElement = null;
+	$scope.focusedElementId = null;
+
+	$scope.keyCode = "";
+
+	$scope.CSSStyle = "";
+	$scope.fontSize = "";
+
+
+	$scope.setFontsize = function(focusEvent,focusOrBlur) {
+		console.log("element:",focusEvent)
+		var el=  angular.element(focusEvent.target)
+		console.log("source:",el)
+
+		if( focusOrBlur === 1){
+			$scope.focusedElement = el;
+			$scope.focusedElementId = el.attr("id");
+			el.css({
+				position: 'relative',
+				border: '1px solid red',
+				backgroundColor: 'lightgrey',
+				cursor: 'pointer'
+			});		
+
+			if ($window.getComputedStyle) {
+				$scope.CSSStyle = $window.getComputedStyle(el[0], null)
+			} else {
+				$scope.CSSStyle = el[0].currentStyle
+			}
+			if( $scope.CSSStyle ) {
+				$scope.fontSize = $scope.CSSStyle["fontSize"]
+			}
+
+
+		} else {
+			$scope.focusedElement = null;
+			$scope.focusedElementId = "";
+			$scope.fontSize = "";
+			el.css({
+				position: 'relative',
+				border: '4px solid white',
+				backgroundColor: 'lightgrey',
+				cursor: 'pointer'
+			});
+		}
+
+
+	}
+
+	$scope.registerKeyEvent = function(keyEvent) {
+		var kc = $scope.keyCode = keyEvent.which;
+		var el=  angular.element(keyEvent.target)
+		if ( kc === 43 || kc === 45) {
+			keyEvent.preventDefault();
+			var newFontSize = '15px';
+			if ( kc === 45 ) {newFontSize = '13px';
+		}
+		el.css({
+			fontSize: newFontSize		
+		})
+		$scope.fontSize = newFontSize;
+	}
+};
+
+}
+app01.controller('controller06', ['$scope','$window', fctController06] );
 
 
 
 console.log("/parsing app.js")
+
+
+

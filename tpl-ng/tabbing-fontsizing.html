@@ -1,0 +1,24 @@
+<p>Event Handler</p>
+<div ng-controller='controller06' >
+
+	<div ng-show="focusedElementId">Fokussierte Div ID: {{focusedElementId}}	</div>
+Key Code: {{keyCode}}<br>
+Font Size: {{fontSize}}<br>
+	
+
+	<div id="1" contenteditable="true" ng-focus="setFontsize($event,1)" ng-blur="setFontsize($event,2)" 
+		ng-keypress="registerKeyEvent($event)"
+	>
+		<br>
+		<br>
+	</div>
+
+	<div id="2" contenteditable="true" ng-focus="setFontsize($event,1)" ng-blur="setFontsize($event,2)" 
+		ng-keypress="registerKeyEvent($event)"
+	>
+		<br>
+		<br>
+	</div>
+
+
+</div>
