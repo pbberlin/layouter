@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/pbberlin/tools/colors"
+	"github.com/pbberlin/tools/util"
 	tt "html/template"
 	"net/http"
 )
@@ -32,6 +33,9 @@ var funcMap = tt.FuncMap{
 	},
 	"fAttr": func(s string) tt.HTMLAttr {
 		return tt.HTMLAttr(s)
+	},
+	"fGlobId": func() int {
+		return <-util.Counter
 	},
 }
 

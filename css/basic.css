@@ -10,6 +10,9 @@
 		/* if this causes columns to overflow,
 			then some intermittent/organizing div has no explicit 
 			font-size: 0px
+
+			Generally we can't use font-size percent, becasue 
+
 		*/
 		font-size: 14px; 	
 		line-height: 140%;

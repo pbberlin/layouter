@@ -241,18 +241,16 @@ var fctController06 = function($scope,$window) {
 
 
 	$scope.setFontsize = function(focusEvent,focusOrBlur) {
-		console.log("element:",focusEvent)
+		//console.log("element:",focusEvent)
 		var el=  angular.element(focusEvent.target)
-		console.log("source:",el)
+		// console.log("source:",el)
 
 		if( focusOrBlur === 1){
 			$scope.focusedElement = el;
 			$scope.focusedElementId = el.attr("id");
 			el.css({
-				position: 'relative',
-				border: '1px solid red',
-				backgroundColor: 'lightgrey',
-				cursor: 'pointer'
+				border: '0px solid red',
+				backgroundColor: 'red'
 			});		
 
 			if ($window.getComputedStyle) {
@@ -260,8 +258,11 @@ var fctController06 = function($scope,$window) {
 			} else {
 				$scope.CSSStyle = el[0].currentStyle
 			}
+
 			if( $scope.CSSStyle ) {
 				$scope.fontSize = $scope.CSSStyle["fontSize"]
+				console.log("edit fontsize - id:",$scope.focusedElementId, " font-size:",$scope.fontSize)
+				// el.append("<h5>fontsize: "+$scope.fontSize+"</h5>")
 			}
 
 
@@ -270,32 +271,44 @@ var fctController06 = function($scope,$window) {
 			$scope.focusedElementId = "";
 			$scope.fontSize = "";
 			el.css({
-				position: 'relative',
-				border: '4px solid white',
-				backgroundColor: 'lightgrey',
-				cursor: 'pointer'
+				border: 'none',
+				backgroundColor: 'transparent'
 			});
+			console.log("  edit fontsize cleared")
+			// el.find("h5").remove()
 		}
 
 
 	}
 
 	$scope.registerKeyEvent = function(keyEvent) {
-		var kc = $scope.keyCode = keyEvent.which;
 		var el=  angular.element(keyEvent.target)
+		var kc = $scope.keyCode = keyEvent.which;
+		//console.log("keycode:",kc )
 		if ( kc === 43 || kc === 45) {
 			keyEvent.preventDefault();
-			var newFontSize = '15px';
-			if ( kc === 45 ) {newFontSize = '13px';
+
+			var valPlusUnit =  getNumPartOfCSSMeasure($scope.fontSize)
+
+			if ( kc === 45 ) {
+				valPlusUnit.val -= 1
+			}
+			if ( kc === 43 ) {
+				valPlusUnit.val += 1
+			}
+			var newFontSize =  (valPlusUnit.val +  valPlusUnit.unit);
+
+			el.css({"fontSize": newFontSize});
+			el.children().css({"fontSize": newFontSize});
+			// el.find("p").css({"backgroundColor": "blue"});
+
+
+			console.log("  fontsize changed:",$scope.fontSize, " keycode:",kc );
+			$scope.fontSize = newFontSize;
 		}
-		el.css({
-			fontSize: newFontSize		
-		})
-		$scope.fontSize = newFontSize;
 	}
 };
 
-}
 app01.controller('controller06', ['$scope','$window', fctController06] );
 
 
@@ -303,4 +316,33 @@ app01.controller('controller06', ['$scope','$window', fctController06] );
 console.log("/parsing app.js")
 
 
+// We need a css property value parser
+// http://glazman.org/JSCSSP/ is too heavy
+// 15px => {val:15,unit:"px"}
+function getNumPartOfCSSMeasure(measure){
 
+	try {
+		var digits = ""
+		var unit = ""
+		measure = measure.toLowerCase();
+
+		for ( var i = 0; i < measure.length; i++) { 
+			var c = measure.charAt(i); 
+			var ascii = measure.charCodeAt(i); 
+			if(ascii >= 97 && ascii <= 121){
+				unit += c
+			}
+			if(ascii >= 46 && ascii <= 58){
+				digits += c
+			}
+			// console.log(c, ascii)
+		}
+		// console.log(eval(digits), unit)
+		return {val:eval(digits),unit:unit}
+	}
+	catch (e) {
+		return {val:12,unit:"px"}
+	}
+
+
+}

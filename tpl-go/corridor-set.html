@@ -7,6 +7,8 @@
 <span
 	name='wrap-all-corridors' 
 	class='bl-no-block-spaces' 
+	ng-controller="controller06" 
+
 >
 
 {{range $idxCorridor, $lpCorridor := .Corridors }}
@@ -96,17 +98,25 @@
 
 
 					{{$colorBlockCol := fColorizer 2 $idxCol }}
+					{{$tabIndexAndId := fGlobId }}
 
 
 
 					<div 
 						name='force-columnar-align'
-						class='blc wn bl-a1   col-border-inner {{if eq $idxCol $idxLastCol }} col-border-rightmost {{end}}
+						id='{{$tabIndexAndId}}'
+						tabindex='{{$tabIndexAndId}}'
+						aacontenteditable='true'
+
+						ng-focus="setFontsize($event,1)" 
+						ng-blur="setFontsize($event,2)" 
+						ng-keypress="registerKeyEvent($event)"
+
+						class='blc wn columnar-margin   col-border-inner {{if eq $idxCol $idxLastCol }} col-border-rightmost {{end}}
 						' 
 						style='
 							aabackground-color:#{{$colorBlockCol}}; 
 						' 
-						contenteditable='true'
 					>
 
 						<div  name='debug_label_block_column'  class='debug-label' style='top:32px;'  contenteditable='false' >
