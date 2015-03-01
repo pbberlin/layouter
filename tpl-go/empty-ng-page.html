@@ -42,7 +42,7 @@
 		/* level1 - block - fonts and margins */
 		.bl-h1 {
 			font-size:16px;
-			line-height: 20px;
+			line-height: 125%;
 			font-weight:bold;
 
 
@@ -59,8 +59,8 @@
 
 
 		.columnar-margin {
-			font-size: 12px;
-			line-height: 15px;
+			font-size: 12px;  /* for getComputedStyle() at init */
+			letter-spacing: normal;
 
 			margin: 0px;
 			margin-top: 2px;
@@ -121,7 +121,7 @@
 
 		h2 {
 			font-size: 13px;
-			line-height: 15px;
+			line-height: 125%;
 			font-weight: bold;
 			padding: 0;
 			margin: 0;
@@ -130,7 +130,7 @@
 		}
 		p {
 			font-size: 12px;
-			line-height: 15px;
+			line-height: 120%;
 			padding: 0;
 			margin: 0;
 			margin-bottom: 7px;

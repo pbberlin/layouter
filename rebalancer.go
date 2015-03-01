@@ -43,8 +43,7 @@ func (b *Block) RebalanceElements() []string {
 		sentencsRefined := RecombineShortTokens(sentencesRaw, 15)
 		sentencsRefined = SplitFurther(sentencsRefined, ",")
 		sentencsRefined = RecombineShortTokens(sentencsRefined, 15)
-		// We could now go on and split by
-		// ? and ! and , and ;
+		// We could now go on and split by ? and ! and ;
 		// We could exclude abbreviations such as inc. or and et. al.
 
 		numRefinedSentences := len(sentencsRefined)

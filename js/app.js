@@ -238,6 +238,9 @@ var fctController06 = function($scope,$window) {
 
 	$scope.CSSStyle = "";
 	$scope.fontSize = "";
+	$scope.letterSpacing = 0;
+	$scope.lineHeight = 125;
+
 
 
 	$scope.setFontsize = function(focusEvent,focusOrBlur) {
@@ -282,29 +285,47 @@ var fctController06 = function($scope,$window) {
 	}
 
 	$scope.registerKeyEvent = function(keyEvent) {
+		keyEvent.preventDefault();
 		var el=  angular.element(keyEvent.target)
 		var kc = $scope.keyCode = keyEvent.which;
-		//console.log("keycode:",kc )
+		console.log("keycode:",kc,keyEvent.shiftKey , keyEvent.altKey )
+		if ( kc === 108 || kc === 76 ) {
+				if ( kc === 76  ) {
+					$scope.lineHeight -= 5
+				}
+				if ( kc === 108 ) {
+					$scope.lineHeight += 5
+				}
+				el.css({"lineHeight": $scope.lineHeight+"%"});
+				el.children().css({"lineHeight": $scope.lineHeight+"%"});
+				console.log("  lineHeight changed:",$scope.lineHeight);
+		}
+		if ( (kc === 42 || kc === 95) &&  keyEvent.shiftKey) {
+				if ( kc === 95  ) {
+					$scope.letterSpacing -= 1
+				}
+				if ( kc === 42 ) {
+					$scope.letterSpacing += 1
+				}
+				el.css({"letterSpacing": $scope.letterSpacing+"px"});
+				el.children().css({"letterSpacing": $scope.letterSpacing+"px"});
+				console.log("  letter spacing changed:",$scope.letterSpacing);
+		}
 		if ( kc === 43 || kc === 45) {
-			keyEvent.preventDefault();
+				var valPlusUnit =  getNumPartOfCSSMeasure($scope.fontSize)
+				if ( kc === 45 ) {
+					valPlusUnit.val -= 1
+				}
+				if ( kc === 43 ) {
+					valPlusUnit.val += 1
+				}
+				var newFontSize =  (valPlusUnit.val +  valPlusUnit.unit);
+				el.css({"fontSize": newFontSize});
+				el.children().css({"fontSize": newFontSize});
+				// el.find("p").css();
+				$scope.fontSize = newFontSize;
+				console.log("  fontsize changed:",$scope.fontSize, " keycode:",kc );
 
-			var valPlusUnit =  getNumPartOfCSSMeasure($scope.fontSize)
-
-			if ( kc === 45 ) {
-				valPlusUnit.val -= 1
-			}
-			if ( kc === 43 ) {
-				valPlusUnit.val += 1
-			}
-			var newFontSize =  (valPlusUnit.val +  valPlusUnit.unit);
-
-			el.css({"fontSize": newFontSize});
-			el.children().css({"fontSize": newFontSize});
-			// el.find("p").css({"backgroundColor": "blue"});
-
-
-			console.log("  fontsize changed:",$scope.fontSize, " keycode:",kc );
-			$scope.fontSize = newFontSize;
 		}
 	}
 };
@@ -314,6 +335,7 @@ app01.controller('controller06', ['$scope','$window', fctController06] );
 
 
 console.log("/parsing app.js")
+
 
 
 // We need a css property value parser
